@@ -279,6 +279,33 @@ int solve(vector<string>& dictionary, string start, string end) {
 }
 
 //===================================================================================================
+// pblm :: https://leetcode.com/discuss/interview-question/1456380/Uber-Online-Assessment
+#include<bits/stdc++.h>
+using namespace std;
+int arr[5001][5001];
+int res[5001][5001];
+int main(){
+    int n;
+    cin>>n;
+    for(int i=1;i<=n;i++)
+        cin>>arr[1][i],res[1][i]=arr[1][i];
+    for(int i=2;i<=n;i++){
+        for(int j=1;j<=n-i+1;j++){
+            arr[i][j]=arr[i-1][j]^arr[i-1][j+1];
+            res[i][j]=max(arr[i][j],max(res[i-1][j],res[i-1][j+1]));
+        }
+    }
+    int q;
+    cin>>q;
+    while(q--){
+        int l,r;
+        cin>>l>>r;
+        int row=r-l+1;
+        int col=l;
+        cout<<res[row][col]<<"\n";
+    }
+    return 0;
+}
 //===================================================================================================
 /*
 Uber OA - codesignal 2021 :: https://leetcode.com/discuss/interview-question/1272223/uber-oa-questions-codesignal-test-2021
