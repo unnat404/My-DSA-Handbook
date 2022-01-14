@@ -4,11 +4,12 @@ Question List:
 1- Justify text
 2- longest palindromic subsequence
 3- https://leetcode.com/problems/minimum-number-of-operations-to-make-array-continuous/
-4- uber oa || base2 to base6
+4- uber oa || base2 to base6 || imp (repeat)(big integer/better approach)
 5- uber oa || longest bitonic subseq - leetcode/gfg 
 6- uber oa || dungeon games - leetcode 
 7- lis - o(n*n) & o(n*log n) approaches
 8- Get Longest Increasing Subsequence Path
+9- sliding window max
 */
 
 //=================================================================================================
@@ -120,6 +121,83 @@ public:
 // i/p : (1100) in base 2 => base2<bool> : [flase,false,true,true] ,
 // o/p : (20) in base 6   => base6<int> : [0,2] 
 //  Note : base6 is stored in reverse
+
+// https://www.hackerrank.com/contests/goc-cdc-series-10/challenges/itsybitsy/editorial
+#include <bits/stdc++.h>
+using namespace std;
+#define int long long
+#define endl "\n"
+#define MOD 1000000007
+#define mod 998244353
+#define ar array
+#define fast_io ios_base::sync_with_stdio(false); cin.tie(NULL); cout.tie(NULL);
+
+void test_case() {
+    int n; cin >> n;
+    vector<int> a(n);
+    bool zero = true;
+    for (int i = 0; i < n; i++) {
+        cin >> a[i];
+        if (a[i] == 1) zero = false;
+    }
+    if (zero) {
+        cout << 0 << "\n";
+        return;
+    }
+
+    // a = 0010 --> 0100
+    reverse(a.begin(), a.end());
+    vector<int> res(105);
+    for (int i = 0; i < n; i++) {
+        if (a[i] == 0) {
+            // convert number to 2*n
+            int carry = 0;
+            for (int j = 0; j < 104; j++) {
+                int num_here = 2*res[j] + carry;
+                carry = num_here/6;
+                res[j] = num_here%6;
+            }
+            assert(carry == 0);
+        }
+        else {
+            // convert number to 2*n + 1
+            int carry = 0;
+            for (int j = 0; j < 104; j++) {
+                int num_here = 2*res[j] + carry;
+                carry = num_here/6;
+                res[j] = num_here%6;
+            }
+            carry = 1;
+            for (int j = 0; j < 104; j++) {
+                int num_here = res[j] + carry;
+                carry = num_here/6;
+                res[j] = num_here%6;
+            }
+            assert(carry == 0);
+        }
+    }
+    assert(res.back() == 0);
+    while (res.back() == 0) res.pop_back();
+    for (int i = 0; i < (int) res.size(); i++) {
+        if (i > 0) cout << " ";
+        cout << res[i];
+    }
+    cout << endl;
+}
+
+int32_t main() {
+    fast_io;
+
+    int t; cin >> t;
+    while (t--) {
+        test_case();
+    }
+
+    return 0;
+}
+
+//not all test cases will pass th below code (since big integer problem) 
+//(As max no. => 2^101-1)
 vector<int> base2ToBase6(vector<bool> base2){
     int power=1,i,num=0;
     reverse(base2.begin(),base2.end());//doubt regarding this
@@ -138,10 +216,7 @@ vector<int> base2ToBase6(vector<bool> base2){
     reverse(ans.begin(),ans.end());
     return ans;
 }
-while(n>5){
-    ...
-}
-if(n>0) ans.push_back(n);
+
 
 //=================================================================================================
 // 5. Uber OA || SDE Intern 2 month => 14/01/2022 
@@ -175,36 +250,10 @@ int calculateMinimumHP(vector<vector<int>> &dungeon) {
     return dp[0][0];
 }
 //soln ref: https://www.youtube.com/watch?v=w5lB4ViKk6g
-//-------------------------------------------------------
-//my soln : totally wrong
-// bool isSafe(int i,int j,int m,int n){
-//     if(i<0 || j<0 || i>=m || j>=n) return false;
-//     return true;
-// }
-// int mario(vector<vector<int>> room){
-//     int i,j,m=room.size(),n=room[0].size(),cur;
-//     vector<vector<int>> dp(m,vector<int> (n,0));
-//     // vector<vector<int>> posDp(m,vector<int> (n,0));//take min of 
-//     // vector<vector<int>> negdp(m,vector<int> (n,0));
 
-//     dp[m-1][n-1]=room[m-1][n-1];
-//     for(i=m-1;i>=0;i--){
-//         for(j=n-1;j>=0;j--){
-//             if(isSafe(i+1,j,m,n)){
-//                 dp[i][j]=room[i][j]+ dp[i+1][j];
-//             }
-//             if(isSafe(i,j+1,m,n)){
-//                 dp[i][j]=max(dp[i][j], room[i][j]+dp[i][j+1]);
-//                 // dp[i][j]=min(dp[i][j], room[i][j]+dp[i][j+1]);
-//             }
-//         }
-//     }
-//     if(dp[0][0]>=0) return 0;
-//     return dp[0][0];
-// }
 
 //=================================================================================================
-// Uber OA || SDE Intern 2 month => 14/01/2022 
+// 5. Uber OA || SDE Intern 2 month => 14/01/2022 
 // longest bitonic subsequence :: (1st increase, then decrease)
 
 //o(n*n) approach
@@ -237,6 +286,9 @@ int minimumMountainRemovals(vector<int>& nums) {
     }
 
 //---------------
+//approach 2
+// 5. Uber OA || SDE Intern 2 month => 14/01/2022 
+// longest bitonic subsequence :: (1st increase, then decrease)
 // OJ: https://leetcode.com/problems/minimum-number-of-removals-to-make-mountain-array/
 // Author: github.com/lzl124631x
 // Time: O(NlogN)
@@ -268,9 +320,21 @@ public:
     }
 };
 //=================================================================================================
-// Leetcode 1761. Minimum Degree of a Connected Trio in a Graph
+// 6. Leetcode 1761. Minimum Degree of a Connected Trio in a Graph
 // https://leetcode.com/problems/minimum-degree-of-a-connected-trio-in-a-graph/
 // O(n*n*n)
+/*
+Input  1: n = 6, edges = [[1,2],[1,3],[3,2],[4,1],[5,2],[3,6]]
+Output 1: 3
+Explanation: There is exactly one trio, which is [1,2,3]. The edges that form its degree are bolded in the figure above.
+
+Input  2: n = 7, edges = [[1,3],[4,1],[4,3],[2,5],[5,6],[6,7],[7,5],[2,6]]
+Output 2: 0
+Explanation: There are exactly three trios:
+1) [1,4,3] with degree 0.
+2) [2,5,6] with degree 2.
+3) [5,6,7] with degree 2.
+*/
 class Solution {
 public:
     int deg[403];
@@ -409,4 +473,35 @@ int main() {
     return 0;
 }
 //=================================================================================================
+//9. sliding window maximum ::
+/*
+Input: nums = [1,3,-1,-3,5,3,6,7], k = 3
+Output: [3,3,5,5,6,7]
+Explanation: 
+Window position                Max
+---------------               -----
+[1  3  -1] -3  5  3  6  7       3
+ 1 [3  -1  -3] 5  3  6  7       3
+ 1  3 [-1  -3  5] 3  6  7       5
+ 1  3  -1 [-3  5  3] 6  7       5
+ 1  3  -1  -3 [5  3  6] 7       6
+ 1  3  -1  -3  5 [3  6  7]      7
+*/
+//soln using deque:: The data structure used is know as Monotonic Queue
+
+class Solution {
+public:
+    vector<int> maxSlidingWindow(vector<int>& nums, int k) {
+        deque<int> dq;
+        vector<int> ans;
+        for (int i=0; i<nums.size(); i++) {
+            if (!dq.empty() && dq.front() == i-k) dq.pop_front();
+            while (!dq.empty() && nums[dq.back()] < nums[i])
+                dq.pop_back();
+            dq.push_back(i);
+            if (i>=k-1) ans.push_back(nums[dq.front()]);
+        }
+        return ans;
+    }
+};
 //=================================================================================================

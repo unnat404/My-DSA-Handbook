@@ -484,7 +484,57 @@ class SubStringDivisible {
 }
 
 //===================================================================================================
+//xor problem :: https://leetcode.com/discuss/interview-question/1456380/Uber-Online-Assessment
+/*
+It's a DP problem! Bloody hell! It took me 10 minutes just to understand what max they asked for!
+(It's easy to start thinking about this as a problem to accumulate the whole array and query sub arrays, but it's wrong)
 
+One important thing to notice is that for any number X, X^X = 0! (X^0 = X too)
+In the prob statement e.g., f(1,2,4,8) can be written as f(1,2,4) ^ f(2,4,8).
+f(1,2,4,8) = f(1^2,2^4,4^8) = f( ((1^2)^(2^4)), ((2^4)^(4^8)) ) = f(1,2,4) ^ f(2,4,8)
+
+Side note:
+There might be even better optimizations to calculate an f function because f(x1,x2,x3,x4,x5) = f(x1,x5) and f(x1,x2,x3,x4,x5,x6,x7,x8,x9) = f(x1,x9)
+But those patterns are not as easy to find: f(x1,x2,x3,x4,x5,x6,x7) = f(x1,x3,x5,x7) and f(x1,x2,x3,x4) = f(x1,x2) ^ f(x3,x4)
+Besides, we need the intermediate f results to calculate max anyways.
+
+Now, it's easy to build a DP solution as dp(i,j) = dp(i,j-1) ^ dp(i+1,j).
+Each subproblem will return the function f number as well as a max number found so far.
+
+E.g. [1,2,4,8,16,32], query 1-6 (non-zero based)
+Call subproblems dp(1,5) and dp(2,6).
+Returned values from sub-levels:
+res1,max1 = dp(1,5), where res1 = f(1-5).
+res2,max2 = dp(2-6), where res2 = f(2-6).
+Calculate mx = max(max1,max2,res1 ^ res2).
+From this level return (res1 ^ res2),mx
+*/
+#include<bits/stdc++.h>
+using namespace std;
+int arr[5001][5001];
+int res[5001][5001];
+int main(){
+    int n;
+    cin>>n;
+    for(int i=1;i<=n;i++)
+        cin>>arr[1][i],res[1][i]=arr[1][i];
+    for(int i=2;i<=n;i++){
+        for(int j=1;j<=n-i+1;j++){
+            arr[i][j]=arr[i-1][j]^arr[i-1][j+1];
+            res[i][j]=max(arr[i][j],max(res[i-1][j],res[i-1][j+1]));
+        }
+    }
+    int q;
+    cin>>q;
+    while(q--){
+        int l,r;
+        cin>>l>>r;
+        int row=r-l+1;
+        int col=l;
+        cout<<res[row][col]<<"\n";
+    }
+    return 0;
+}
 //===================================================================================================
 
 //===================================================================================================
