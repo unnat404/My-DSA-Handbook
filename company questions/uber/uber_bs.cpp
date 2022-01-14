@@ -205,8 +205,68 @@ int calculateMinimumHP(vector<vector<int>> &dungeon) {
 
 //=================================================================================================
 // Uber OA || SDE Intern 2 month => 14/01/2022 
-// longest bitonic subsequence
+// longest bitonic subsequence :: (1st increase, then decrease)
 
+//o(n*n) approach
+int minimumMountainRemovals(vector<int>& nums) {
+        int n=nums.size(),i,j,ans=1;
+        vector<int> a=nums;
+        vector<int> lis(n,1),lds(n,1);
+        for(i=1;i<n;i++){
+            lis[i]=1;
+            for(j=0;j<i;j++){
+                if(nums[i]>nums[j]) lis[i]=max(lis[i],lis[j]+1);
+            }
+        }
+        
+        for(i=n-2;i>=0;i--){
+            for(j=n-1;j>i;j--){
+                if(nums[j]<nums[i]) lds[i]=max(lds[i],lds[j]+1);
+            }
+        }
+        // reverse(a.begin(),a.end());
+        for(i=0;i<n;i++){
+            if(lis[i]==1 || lds[i]==1) continue; //this is done if it has to have both increasing and decreasing patterns
+            ans=max(ans,lis[i]+lds[i]-1);
+        }
+        // ans --> at this moment stores length of longest bitonic subsequence 
+        // return ans; //ans --> at this moment stores length of longest bitonic subsequence 
+        ans=n-ans; //ans after this stores the min elements to be deleted to make array longest bitonic 
+        return ans;
+        
+    }
+
+//---------------
+// OJ: https://leetcode.com/problems/minimum-number-of-removals-to-make-mountain-array/
+// Author: github.com/lzl124631x
+// Time: O(NlogN)
+// Space: O(N)
+class Solution {
+public:
+    int minimumMountainRemovals(vector<int>& A) {
+        int N = A.size(), ans = N;
+        vector<int> a(N), b(N), v;
+        for (int i = 0 ; i < N; ++i) {
+            int x = A[i];
+            auto it = lower_bound(begin(v), end(v), x);
+            a[i] = it - begin(v);
+            if (it != end(v)) *it = x;
+            else v.push_back(x);
+        }
+        v.clear();
+        for (int i = N - 1; i >= 0; --i) {
+            int x = A[i];
+            auto it = lower_bound(begin(v), end(v), x) ;
+            b[i] = it - begin(v); 
+            if (it != end(v)) *it = x;
+            else v.push_back(x);
+        }
+        for (int i = 1; i < N; ++i) {
+            if (a[i] && b[i]) ans = min(ans, N - (a[i] + b[i] + 1));
+        }
+        return ans;
+    }
+};
 //=================================================================================================
 // Leetcode 1761. Minimum Degree of a Connected Trio in a Graph
 // https://leetcode.com/problems/minimum-degree-of-a-connected-trio-in-a-graph/
