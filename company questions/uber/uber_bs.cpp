@@ -4,6 +4,11 @@ Question List:
 1- Justify text
 2- longest palindromic subsequence
 3- https://leetcode.com/problems/minimum-number-of-operations-to-make-array-continuous/
+4- uber oa || base2 to base6
+5- uber oa || longest bitonic subseq - leetcode/gfg 
+6- uber oa || dungeon games - leetcode 
+7- lis - o(n*n) & o(n*log n) approaches
+8- Get Longest Increasing Subsequence Path
 */
 
 //=================================================================================================
@@ -110,7 +115,7 @@ public:
     }
 };
 //=================================================================================================
-// Uber OA || SDE Intern 2 month  => 14/01/2022 
+// 4. Uber OA || SDE Intern 2 month  => 14/01/2022 
 //covert base 2 number to base 6
 // i/p : (1100) in base 2 => base2<bool> : [flase,false,true,true] ,
 // o/p : (20) in base 6   => base6<int> : [0,2] 
@@ -139,35 +144,64 @@ while(n>5){
 if(n>0) ans.push_back(n);
 
 //=================================================================================================
-// Uber OA || SDE Intern 2 month => 14/01/2022 
+// 5. Uber OA || SDE Intern 2 month => 14/01/2022 
+// same question :: https://leetcode.com/problems/dungeon-game/
 // given a matrix[m][n], go from (0,0) to (m-1,n-1)
 // matrix[i][j] stores numbers +ve(means adds power) and -ve(means drains power) and 0 mens empty(you can go in this cel though)
-// whats the minimum power need to reach the required distination
-bool isSafe(int i,int j,int m,int n){
-    if(i<0 || j<0 || i>=m || j>=n) return false;
-    return true;
-}
-int mario(vector<vector<int>> room){
-    int i,j,m=room.size(),n=room[0].size(),cur;
-    vector<vector<int>> dp(m,vector<int> (n,0));
-    // vector<vector<int>> posDp(m,vector<int> (n,0));//take min of 
-    // vector<vector<int>> negdp(m,vector<int> (n,0));
+// whats the minimum power mario needs to reach the required distination ?
+// matrix[i][j] in range: [-1000,1000] ; 1<= m,n <= 300
+// at each/any point the health must be >0 ,other wise mario dies
 
-    dp[m-1][n-1]=room[m-1][n-1];
-    for(i=m-1;i>=0;i--){
-        for(j=n-1;j>=0;j--){
-            if(isSafe(i+1,j,m,n)){
-                dp[i][j]=room[i][j]+ dp[i+1][j];
-            }
-            if(isSafe(i,j+1,m,n)){
-                dp[i][j]=max(dp[i][j], room[i][j]+dp[i][j+1]);
-                // dp[i][j]=min(dp[i][j], room[i][j]+dp[i][j+1]);
-            }
+int calculateMinimumHP(vector<vector<int>> &dungeon) {
+    int n = dungeon.size();
+    int m = dungeon[0].size();
+
+    vector<vector<int> > dp(n + 1, vector<int>(m + 1, 1e9));
+    dp[n][m - 1] = 1;
+    dp[n - 1][m] = 1;
+    
+    for (int i = n - 1; i >= 0; i--) 
+    {
+        for (int j = m - 1; j >= 0; j--) 
+        {
+            // int down = dp[i+1] - dungeon[i][j];
+            // int right = dp[i][j+1] - dungeon[i][j];
+            // int need = mi(down,right);
+            int need = min(dp[i + 1][j], dp[i][j + 1]) - dungeon[i][j];                
+            // store this value
+            dp[i][j] = need <= 0 ? 1 : need;
         }
     }
-    if(dp[0][0]>=0) return 0;
     return dp[0][0];
 }
+//soln ref: https://www.youtube.com/watch?v=w5lB4ViKk6g
+//-------------------------------------------------------
+//my soln : totally wrong
+// bool isSafe(int i,int j,int m,int n){
+//     if(i<0 || j<0 || i>=m || j>=n) return false;
+//     return true;
+// }
+// int mario(vector<vector<int>> room){
+//     int i,j,m=room.size(),n=room[0].size(),cur;
+//     vector<vector<int>> dp(m,vector<int> (n,0));
+//     // vector<vector<int>> posDp(m,vector<int> (n,0));//take min of 
+//     // vector<vector<int>> negdp(m,vector<int> (n,0));
+
+//     dp[m-1][n-1]=room[m-1][n-1];
+//     for(i=m-1;i>=0;i--){
+//         for(j=n-1;j>=0;j--){
+//             if(isSafe(i+1,j,m,n)){
+//                 dp[i][j]=room[i][j]+ dp[i+1][j];
+//             }
+//             if(isSafe(i,j+1,m,n)){
+//                 dp[i][j]=max(dp[i][j], room[i][j]+dp[i][j+1]);
+//                 // dp[i][j]=min(dp[i][j], room[i][j]+dp[i][j+1]);
+//             }
+//         }
+//     }
+//     if(dp[0][0]>=0) return 0;
+//     return dp[0][0];
+// }
 
 //=================================================================================================
 // Uber OA || SDE Intern 2 month => 14/01/2022 
@@ -223,6 +257,96 @@ int minTrioDegree(int n, vector<vector<int>>& edges) {
     return res == INT_MAX ? -1 : res;
 }
 //=================================================================================================
+// 7.lis : longes increasing subsequence
+
+//o(n*n)
+int lengthOfLIS(vector<int> &a){
+    int n=a.size(),i,j,ans;
+    if(n==0) return 0;
+    vector<int> dp(n,1);
+    dp[0]=ans=1;
+    for(i=1;i<n;i++){
+        dp[i]=1;
+        for(j=0;j<i;j++){
+            if(a[i]>a[j]){
+                dp[i]=max(dp[i],dp[j]+1);
+            }
+            ans=max(ans,dp[i]);
+        }
+    }
+    return ans;
+}
+
+//o(n*log n)
+//length of longest non-decreasing subsequence
+// int lnds(vector<int>& a){
+int lis(vector<int> &a){ //length of longest increasing subsequence
+    int n=a.size(),i,ans;
+    vector<int> temp;
+    for(i=0;i<n;i++){
+        // if(temp.size()==0 || temp.back()<=a[i]){ //for lnds
+        if(temp.size()==0 || temp.back() < a[i]){ //for lis
+            temp.push_back(a[i]);
+        }
+        else{
+            // int ind=upper_bound(temp.begin(),temp.end(),a[i])-temp.begin(); // for lnds
+            int ind=lower_bound(temp.begin(),temp.end())-temp.begin(); //for lis
+            temp[ind]=a[i];
+        }
+    }
+    return temp.size();
+}
+
+//-------------
+int lengthOfLIS(vector<int>& nums) {
+        vector<int> sub;
+        for (int x : nums) {
+            if (sub.empty() || sub[sub.size() - 1] < x) {
+                sub.push_back(x);
+            } else {
+                auto it = lower_bound(sub.begin(), sub.end(), x); // Find the index of the smallest number >= x
+                *it = x; // Replace that number with x
+            }
+        }
+        return sub.size();
+    }
 //=================================================================================================
+
+// 8. Get Longest Increasing Subsequence Path
+class Solution {
+public:
+    vector<int> pathOfLIS(vector<int>& nums) {
+        int n = nums.size();
+        vector<int> sub, subIndex; // Store index instead of value for tracing path purpose
+        vector<int> path(n, -1); // path[i] point to the index of previous number in LIS
+        for (int i = 0; i < n; ++i) {
+            if (sub.empty() || sub[sub.size() - 1] < nums[i]) {
+                path[i] = sub.empty() ? -1 : subIndex[sub.size() - 1];
+                sub.push_back(nums[i]);
+                subIndex.push_back(i);
+            } else {
+                int idx = lower_bound(sub.begin(), sub.end(), nums[i]) - sub.begin();
+                path[i] = idx == 0 ? -1 : subIndex[idx - 1];
+                sub[idx] = nums[i];
+                subIndex[idx] = i;
+            }
+        }
+        vector<int> ans;
+        int t = subIndex[subIndex.size() - 1];
+        while (t != -1) {
+            ans.push_back(nums[t]);
+            t = path[t];
+        }
+        reverse(ans.begin(), ans.end());
+        return ans;
+    }
+};
+
+int main() {
+    vector<int> nums = {2, 6, 8, 3, 4, 5, 1};
+    vector<int> res = Solution().pathOfLIS(nums); // [2, 3, 4, 5]
+    for (int x : res) cout << x << " "; 
+    return 0;
+}
 //=================================================================================================
 //=================================================================================================
