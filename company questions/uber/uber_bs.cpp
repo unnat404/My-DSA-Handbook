@@ -4,12 +4,17 @@ Question List:
 1- Justify text
 2- longest palindromic subsequence
 3- https://leetcode.com/problems/minimum-number-of-operations-to-make-array-continuous/
-4- uber oa || base2 to base6 || imp (repeat)(big integer/better approach)
-5- uber oa || longest bitonic subseq - leetcode/gfg 
-6- uber oa || dungeon games - leetcode 
+4- uber oa || 14/01/2022 || base2 to base6 || imp (repeat)(big integer/better approach)
+5- uber oa || 14/01/2022 || longest bitonic subseq - leetcode/gfg 
+6- uber oa || 14/01/2022 || dungeon games - leetcode 
 7- lis - o(n*n) & o(n*log n) approaches
 8- Get Longest Increasing Subsequence Path
 9- sliding window max
+10- uber oa || 14/01/2022 || question 4 (convert base2 to base6) : repeated
+11- uber oa || 14/01/2022 || 
+12- uber oa || 14/01/2022 || modification of burst balloons
+13- 
+14- 
 */
 
 //=================================================================================================
@@ -504,4 +509,18 @@ public:
         return ans;
     }
 };
+//=================================================================================================
+// 10. Uber OA || SDE Intern 2 month => 14/01/2022 || unnat
+// base2 to base6 :: (repeat)
+
+
+//=================================================================================================
+// 11. Uber OA || SDE Intern 2 month => 14/01/2022 || unnat
+// kinda similar :: https://www.geeksforgeeks.org/split-array-into-k-subarrays-such-that-sum-of-maximum-of-all-subarrays-is-maximized/
+
+
+//=================================================================================================
+// 12. Uber OA || SDE Intern 2 month => 14/01/2022 || unnat
+// leetcode :: brust balloons ka modification 
+
 //=================================================================================================
