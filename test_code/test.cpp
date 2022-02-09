@@ -59,6 +59,103 @@ int main()
 	cout<<res;
     return 0;
 }
+//----------------------------------------------------
+/******************************************************************************
+
+                              Online C++ Compiler.
+               Code, Compile, Run and Debug C++ program online.
+Write your code in this editor and press "Run" button to compile and execute it.
+
+*******************************************************************************/
+
+#include <iostream>
+// include<c++
+#include <bits/stdc++.h>
+using namespace std;
+int solve(string A) {
+    int n=A.length(),sum=0;
+    cout<<A[n-1]<<" - \n";
+    if(A[n-1]!='0') return 0;
+    // unordered_map<char,int> m;
+    // m.insert(pair('0',0));
+    // m.insert(pair('1',1));
+    // m.insert(pair('2',2));
+    // m.insert(pair('3',3));
+    // m.insert(pair('4',4));
+    // m.insert(pair('5',5));
+    // m.insert(pair('6',6));
+    // m.insert(pair('7',7));
+    // m.insert(pair('8',8));
+    // m.insert(pair('9',9));
+    // m.insert(pair('',));
+    // for(auto& x:A){
+    //     // string y="0"+x;
+    //     // y=y[1];
+    //     sum+=(m[x])%3;
+    //     sum%=3;
+    // }
+    for(int i=0;i<A.length();i++){
+        string y="0"+A[i];
+        y=y[1];
+        int a=stoi(y);
+        sum+= (a%3);
+        sum%=3;
+    }
+    cout<<sum<<" = " ;
+    if((sum%3)==0) return 1;
+    return 0;
+}
+void solve(int a){
+    deque<int> q;
+    for(int i=1;i<=a;i++){
+        q.push_back(i);
+    }
+    
+    while(q.size()!=1){
+        q.pop_back();
+        auto last=q.back();
+        q.pop_back();
+        q.push_front(last);
+        
+    }
+    cout<<a<<" -> "<< q.front()<<" \n";
+}
+int main()
+{
+    // cout<<"Hello World";
+    int a,i;
+    for(i=1;i<20;i++) solve(i);
+    cout<<log2(5);
+/*
+1 -> 1 
+2 -> 1 
+3 -> 2 
+4 -> 1 
+5 -> 4 
+6 -> 3 
+7 -> 2 
+8 -> 1 
+9 -> 8 
+10 -> 7 
+11 -> 6 
+12 -> 5 
+13 -> 4 
+14 -> 3 
+15 -> 2 
+16 -> 1 
+17 -> 16 
+18 -> 15 
+19 -> 14 
+
+*/
+    
+
+    return 0;
+}
+//--------------------------------------------------------------------
+
+
+
 /*
 class Solution {
 public:

@@ -8,14 +8,18 @@ Graphs Problem List:
     - (to do)(facebook) Leetcode 990. Satisfiability of Equality Equations :: https://leetcode.com/problems/satisfiability-of-equality-equations/
     - Leetcode 130. Surrounded Regions :: https://leetcode.com/problems/surrounded-regions/
     - **Leetcode 1254. Number of Closed Islands :: (same as 130 but you have to think here)(flood fill type) https://leetcode.com/problems/number-of-closed-islands/
-    - Leetcode 
+    - Leetcode 694. Number of Distinct Islands (premium):: https://binarysearch.com/problems/Distinct-Islands
     - 
     - to do :: Leetcode 
     - to do :: Leetcode 
-
+-> graphs topic based 
+    - Leetcode 207. Course Schedule :: https://leetcode.com/problems/course-schedule/ (cyclicity for directed)(uber)
+    - cyclicity for undirected graphs 
  -> To Do:
     - https://leetcode.com/problems/groups-of-strings/
-    -* https://leetcode.com/problems/k-highest-ranked-items-within-a-price-range/  
+    -* https://leetcode.com/problems/k-highest-ranked-items-within-a-price-range/ 
+    - https://www.hackerrank.com/challenges/lilys-homework/problem 
+    - * https://www.geeksforgeeks.org/minimum-number-swaps-required-sort-array/
  -> Must Do:
     ○ Leetcode 133. Clone Graph :: https://leetcode.com/problems/clone-graph/
     ○ Leetcode 1254. Number of Closed Islands
@@ -348,6 +352,165 @@ public:
         return count_islands;
     }
 };
+//===================================================================================================
+// Leetcode 694. Number of Distinct Islands (premium):: https://binarysearch.com/problems/Distinct-Islands
+
+int dx[4]={0,1,0,-1};
+int dy[4]={1,0,-1,0};
+char dir[4]={'R','D','L','U'};// is this direction of visiting imp?? maybe?? i dont think so
+// char dir[4]={'L','D','R','U'};
+void dfs(int x,int y,string &island,vector<vector<int>> &matrix){
+    int n=matrix.size(),m=matrix[0].size();
+    matrix[x][y]=2;
+
+    for(int i=0;i<4;i++){
+        int a=x+dx[i],b=y+dy[i];
+        if(a<0 || b<0 || a>=n || b>=m || matrix[a][b]!=1) continue;
+        island+=dir[i];
+        dfs(a,b,island,matrix);
+        island+='#';//backtracking step/divider to distinguish between islands
+    }
+}
+int solve(vector<vector<int>>& matrix) {
+    int n=matrix.size(),m=matrix[0].size(),i,j;
+    unordered_set<string> s;//distinct islands storing 
+    for(i=0;i<n;i++){
+        for(j=0;j<m;j++){
+            if(matrix[i][j]==1){
+                string island="";
+                dfs(i,j,island,matrix);
+                s.insert(island);
+            }
+        }
+    }
+    return (int)s.size();//return size of set => no of distinct islands
+}
+// in above approach its valid to think:: will the island string differ if we start fromma different node of the island
+// Ans is YES it will be differnet BUT it WONT happen for same islands as we start traversing form the topmost & leftmost node in every island
+// so we need not take care of that
+
+/* 
+-> crux of the problem is to store islands & differentiate between them (/know if 2 islands are equal)
+    Some ways to acheive it is: 
+    - keep set<vector<pair<int, int>>> s; where vector of pair stores the origin shifted coordinates of islands (https://binarysearch.com/problems/Distinct-Islands/solutions/4719189)(for reference & soln)
+    - keep set<string> s; where string represdents the island by mapping the order in which we traverse the island 
+*/
+
+/*
+d,r,u,l
+
+d # r # 
+1 1 
+1    
+
+d r # #
+1
+1 1
+ 
+# represents the backtracking step (needed to distinguish between different islands)
+
+*/
+//===================================================================================================
+// Leetcode 207. Course Schedule :: https://leetcode.com/problems/course-schedule/
+// Company tag:: Uber 
+
+//soln: you have to keep 2 arrays -> one for current path ,&, -> one for visited
+class Solution {
+public:
+    bool checkCycle(int node,vector<int>& visited,vector<bool> &cur_path,vector<vector<int>> &adj){
+        // visited[node]=1;
+        bool cycle=false;
+        for(auto& nbr:adj[node]){
+            if(cur_path[nbr]==true) return cycle=true;//cycle present
+            
+            if(!visited[nbr]){//not visited
+                cur_path[nbr]=true;
+                visited[nbr]=1;
+                cycle= cycle || checkCycle(nbr,visited,cur_path,adj);
+                cur_path[nbr]=false;
+            }            
+        }return cycle;
+    }
+    bool canFinish(int numCourses, vector<vector<int>>& prerequisites) {
+        int i,n=prerequisites.size();
+        vector<int> visited(numCourses,0);
+        vector<vector<int>> adj(numCourses);
+        for(auto& x:prerequisites){
+            adj[x[0]].push_back(x[1]);
+        }
+        
+        for(i=0;i<numCourses;i++){
+            if(!visited[i]){
+                vector<bool> cur_path(numCourses,false);
+                visited[i]=1;
+                cur_path[i]=true;
+                if(checkCycle(i,visited,cur_path,adj)){
+                    return false;//if cycle present => course cant be finished as no starting point
+                }
+                cur_path[i] = false;
+            }
+        }
+        return true;//no cycle => course can be finished
+    }
+};
+
+/*
+//not my  approach : see this later (from leetcode discuss)
+
+//Just a simple topological sort, which can be finished in 15 lines. Beats 99%.
+
+bool canFinish(int n, vector<pair<int, int>>& pre) {
+    vector<vector<int>> adj(n, vector<int>());
+    vector<int> degree(n, 0);
+    for (auto &p: pre) {
+        adj[p.second].push_back(p.first);
+        degree[p.first]++;
+    }
+    queue<int> q;
+    for (int i = 0; i < n; i++)
+        if (degree[i] == 0) q.push(i);
+    while (!q.empty()) {
+        int curr = q.front(); q.pop(); n--;
+        for (auto next: adj[curr])
+            if (--degree[next] == 0) q.push(next);
+    }
+    return n == 0;
+}
+
+*/
+/*
+------------
+input:
+------------
+20
+[[0,10],[3,18],[5,2],[6,11],[11,14],[13,1],[15,1],[17,4],[2,7],[7,19],[7,8],[8,9],[9,12],[12,16]]
+3
+[[0,1],[0,2],[1,2]]
+2
+[[1,0]]
+2
+[[1,0],[0,1]]
+100
+[[1,0],[2,0],[2,1],[3,1],[3,2],[4,2],[4,3],[5,3],[5,4],[6,4],[6,5],[7,5],[7,6],[8,6],[8,7],[9,7],[9,8],[10,8],[10,9],[11,9],[11,10],[12,10],[12,11],[13,11],[13,12],[14,12],[14,13],[15,13],[15,14],[16,14],[16,15],[17,15],[17,16],[18,16],[18,17],[19,17],[19,18],[20,18],[20,19],[21,19],[21,20],[22,20],[22,21],[23,21],[23,22],[24,22],[24,23],[25,23],[25,24],[26,24],[26,25],[27,25],[27,26],[28,26],[28,27],[29,27],[29,28],[30,28],[30,29],[31,29],[31,30],[32,30],[32,31],[33,31],[33,32],[34,32],[34,33],[35,33],[35,34],[36,34],[36,35],[37,35],[37,36],[38,36],[38,37],[39,37],[39,38],[40,38],[40,39],[41,39],[41,40],[42,40],[42,41],[43,41],[43,42],[44,42],[44,43],[45,43],[45,44],[46,44],[46,45],[47,45],[47,46],[48,46],[48,47],[49,47],[49,48],[50,48],[50,49],[51,49],[51,50],[52,50],[52,51],[53,51],[53,52],[54,52],[54,53],[55,53],[55,54],[56,54],[56,55],[57,55],[57,56],[58,56],[58,57],[59,57],[59,58],[60,58],[60,59],[61,59],[61,60],[62,60],[62,61],[63,61],[63,62],[64,62],[64,63],[65,63],[65,64],[66,64],[66,65],[67,65],[67,66],[68,66],[68,67],[69,67],[69,68],[70,68],[70,69],[71,69],[71,70],[72,70],[72,71],[73,71],[73,72],[74,72],[74,73],[75,73],[75,74],[76,74],[76,75],[77,75],[77,76],[78,76],[78,77],[79,77],[79,78],[80,78],[80,79],[81,79],[81,80],[82,80],[82,81],[83,81],[83,82],[84,82],[84,83],[85,83],[85,84],[86,84],[86,85],[87,85],[87,86],[88,86],[88,87],[89,87],[89,88],[90,88],[90,89],[91,89],[91,90],[92,90],[92,91],[93,91],[93,92],[94,92],[94,93],[95,93],[95,94],[96,94],[96,95],[97,95],[97,96],[98,96],[98,97],[99,97]]
+------------
+output:
+------------
+true
+true
+true
+false
+true
+*/
+// Qn boils down to findig cyclicity in a directed graph
+//===================================================================================================
+
+//===================================================================================================
+//===================================================================================================
+//===================================================================================================
+//===================================================================================================
+//===================================================================================================
+//===================================================================================================
+//===================================================================================================
 //===================================================================================================
 //===================================================================================================
 //===================================================================================================
