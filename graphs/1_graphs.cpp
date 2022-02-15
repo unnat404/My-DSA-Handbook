@@ -12,9 +12,16 @@ Graphs Problem List:
     - 
     - to do :: Leetcode 
     - to do :: Leetcode 
+
 -> graphs topic based 
     - Leetcode 207. Course Schedule :: https://leetcode.com/problems/course-schedule/ (cyclicity for directed)(uber)
     - cyclicity for undirected graphs 
+    - Leetcode 210. Course Schedule II :: https://leetcode.com/problems/course-schedule-ii/ (topo sort)(uber)
+    - Leetcode 127. Word Ladder :: https://leetcode.com/problems/word-ladder/ (shaortest path)
+    - Leetcode 542. 01 Matrix :: https://leetcode.com/problems/01-matrix/
+    - Leetcode  1162. As Far from Land as Possible :: https://leetcode.com/problems/as-far-from-land-as-possible/
+    - 
+    - Leetcode
  -> To Do:
     - https://leetcode.com/problems/groups-of-strings/
     -* https://leetcode.com/problems/k-highest-ranked-items-within-a-price-range/ 
@@ -412,9 +419,11 @@ d r # #
 */
 //===================================================================================================
 // Leetcode 207. Course Schedule :: https://leetcode.com/problems/course-schedule/
-// Company tag:: Uber 
+// Company tags:: Uber 
 
-//soln: you have to keep 2 arrays -> one for current path ,&, -> one for visited
+//soln: you have to keep 2 arrays(for directed graphs mein cyclicity check krne k liye)
+// -> one for current path ,&,
+// -> one for visited (only visited is need in case of undirected graphs) 
 class Solution {
 public:
     bool checkCycle(int node,vector<int>& visited,vector<bool> &cur_path,vector<vector<int>> &adj){
@@ -503,10 +512,187 @@ true
 */
 // Qn boils down to findig cyclicity in a directed graph
 //===================================================================================================
+// Leetcode 210. Course Schedule II :: https://leetcode.com/problems/course-schedule-ii/
+// tags : uber, topo sort
+#import <bits/stdc++.h>
+class Solution {
+public:
+   
+    vector<int> findOrder(int numCourses, vector<vector<int>>& prerequisites) {
+        //1. start traversing elements with inDegree=0 and make their neighbours ka inDegree-1
+        //2. if after traversing all elemnts the course_order ka size != numCourses => cycle present
+        vector<int> in(numCourses,0);//inDegree for each node
+        vector<int> cur_set,course_order;//stores the set we are traversing now
+        int i,idx=0;
+        vector<vector<int>> adj(numCourses);
+        
+        //Populate graph and indegree vector
+        for(i=0;i<prerequisites.size();i++){
+            // our mapping: Edge from prerequisites[1] -> prerequisites[0]
+            adj[prerequisites[i][1]].push_back(prerequisites[i][0]);// 0 pe indegree hoga 
+            in[prerequisites[i][0]]++;
+        }
+        //Initialize the first set of elements to visit with indgree = 0
+        for(i=0;i<numCourses;i++){
+            if(in[i]==0){
+                cur_set.push_back(i);
+                course_order.push_back(i);
+            }             
+        }
+        
+        while(idx < cur_set.size()){
+            for(auto& nbr:adj[cur_set[idx]]){
+                in[nbr]--;//Decrease indegree of all neighbours of idx by 1
+                if(in[nbr]==0){
+                    cur_set.push_back(nbr);
+                    course_order.push_back(nbr);
+                }
+            }idx++;
+        }
+        // return cur_set.size()!=numCourses ? vector<int>():cur_set;
+        return course_order.size()!=numCourses ? vector<int>():course_order;
+    }
+};
+// Topological sort based question
+//===================================================================================================
+//  Leetcode 127. Word Ladder :: https://leetcode.com/problems/word-ladder/
+// tags :  google(v.old) , shortest path
+class Solution {
+public:
+    //1. model of graph : nodes as wordlist elements & beginWord  (undirected edges bw elements at distance 1)
+    //2. find shortest distance between beginWord & endWord nodes : use level order traversal for it(bfs)
+    int ladderLength(string beginWord, string endWord, vector<string>& wordList) {
+        int ans=0,i,j,level=0;
+        unordered_set<string> visited,dict;
+        queue<string> curLevel;
+        
+        for(auto& word:wordList){
+            dict.insert(word);
+        }
+        curLevel.push(beginWord); //start with the beginWord
+        visited.insert(beginWord);//mark it as visited
+        
+        while(!curLevel.empty()){
+            int len=curLevel.size();
+            level++;// increment level
+            while(len>0){
+                len--;
+                string cur,temp;
+                cur=temp=curLevel.front();
+                curLevel.pop();
+
+                for(i=0;i<cur.size();i++){
+                    for(j=0;j<26;j++){
+                        cur[i] = 'a'+j;// change the i'th charecter in current word to all possible letters 'a' to 'z'
+                        // if(cur==endWord) return level+1;
+                        if(dict.find(cur)!=dict.end() && visited.find(cur)==visited.end()){
+                            curLevel.push(cur);  
+                            visited.insert(cur);//mark visited
+                            if(cur==endWord) return level+1;
+                        }
+                    }cur=temp;// change cur to same initial word in the queue 
+                }
+            }
+        }
+        return 0;
+        
+    }
+};
+//===================================================================================================
+
+// Leetcode 542. 01 Matrix :: https://leetcode.com/problems/01-matrix/
+class Solution {
+public:
+    int dx[4]={-1,1,0,0};
+    int dy[4]={0,0,-1,1};
+    bool inRange(int i,int j,int n,int m){// kina like a inRange() function with modified aim to find distance
+        // int r=dist.size(),c=dist[0].size(),x=1e5;
+        if(i<0 || j<0 || i>=n || j>=m) return false;
+        return true;        
+    }
+
+    vector<vector<int>> updateMatrix(vector<vector<int>>& mat) {
+        int n=mat.size(),m=mat[0].size(),i,j,distance=0;
+        queue<pair<int,int>> curset;// current set to be iterated upon
+        vector<vector<int>> visited(n,vector<int>(m,-1));
+        for(i=0;i<n;i++){
+            for(j=0;j<m;j++){
+                if(mat[i][j]==0){
+                    visited[i][j]=distance;//initial distance =0 for all 0's in th matrix
+                    curset.push({i,j});
+                } 
+            }
+        }
+        
+        while(!curset.empty()){
+            int len=curset.size();
+            distance++;//increment the level for level order traversal 
+            while(len>0){
+                len--;
+                i=curset.front().first,j=curset.front().second;
+                curset.pop();
+                for(int x=0;x<4;x++){
+                    int a=i+dx[x],b=j+dy[x];
+                    if(inRange(a,b,n,m) && visited[a][b]==-1){
+                        //inrange and unvisited
+                        visited[a][b]=distance;
+                        curset.push({a,b});
+                    }
+                }                
+            }
+        }
+        return visited;
+        
+    }
+};
+
+// pblm boils down to finding shortest path
+// but we do parallel bfs for multiple nodes at same time (following level order traversal)
 
 //===================================================================================================
-//===================================================================================================
-//===================================================================================================
+// Leetcode  1162. As Far from Land as Possible :: https://leetcode.com/problems/as-far-from-land-as-possible/
+class Solution {
+public:
+    int dx[4]={-1,1,0,0};
+    int dy[4]={0,0,-1,1};
+    
+    int maxDistance(vector<vector<int>>& grid) {
+        int i,j,n=grid.size(),m=grid[0].size(),distance=-1;
+        vector<vector<int>> vis(n,vector<int> (m,-1));
+        queue<pair<int,int>> q;
+        for(i=0;i<n;i++){
+            for(j=0;j<m;j++){
+                if(grid[i][j]==1){
+                    distance=0;
+                    vis[i][j]=distance;
+                    q.push({i,j});
+                }
+            }
+        }
+        // Level-order traversal (multi-source bfs)
+        while(!q.empty()){
+            int len = q.size();
+            distance++;
+            while(len>0){
+                len--;
+                int x=q.front().first,y=q.front().second;
+                q.pop();
+                for(i=0;i<4;i++){
+                    int a = x+dx[i], b = y+dy[i];
+                    if(a<0 || a>=n || b<0 || b>=m) continue;
+                    
+                    if(vis[a][b]==-1){
+                        q.push({a,b});
+                        vis[a][b]=distance;
+                    }
+                }
+            }
+        }
+        return distance<=1 ? -1 : distance-1 ;
+        
+    }
+};
+
 //===================================================================================================
 //===================================================================================================
 //===================================================================================================
