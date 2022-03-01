@@ -20,13 +20,20 @@ Graphs Problem List:
     - Leetcode 127. Word Ladder :: https://leetcode.com/problems/word-ladder/ (shaortest path)
     - Leetcode 542. 01 Matrix :: https://leetcode.com/problems/01-matrix/
     - Leetcode  1162. As Far from Land as Possible :: https://leetcode.com/problems/as-far-from-land-as-possible/
+    - (to do)Leetcode premium 269:: Alien Dictionary :: https://leetcode.com/problems/alien-dictionary/
+        - (to do)Lintcode :: Alien Dictionary :: https://www.lintcode.com/problem/892/
+    - Leetcode 743. Network Delay Time :: https://leetcode.com/problems/network-delay-time/ (shortest path- wieghted)
     - 
-    - Leetcode
+    -
+    -
+    
  -> To Do:
     - https://leetcode.com/problems/groups-of-strings/
     -* https://leetcode.com/problems/k-highest-ranked-items-within-a-price-range/ 
     - https://www.hackerrank.com/challenges/lilys-homework/problem 
     - * https://www.geeksforgeeks.org/minimum-number-swaps-required-sort-array/
+    - * Leetcode premium 269:: Alien Dictionary :: https://leetcode.com/problems/alien-dictionary/ || https://www.lintcode.com/problem/892/
+
  -> Must Do:
     ○ Leetcode 133. Clone Graph :: https://leetcode.com/problems/clone-graph/
     ○ Leetcode 1254. Number of Closed Islands
@@ -692,10 +699,74 @@ public:
         
     }
 };
+//  qn boils down to : simultaneos bfs for shortest path
+// pblm is simlar to prev one
 
 //===================================================================================================
+// Leetcode premium 269:: https://leetcode.com/problems/alien-dictionary/
+// Lintcode :: https://www.lintcode.com/problem/892/
+
+
+// question on topo sort
 //===================================================================================================
+// Leetcode 743. Network Delay Time :: https://leetcode.com/problems/network-delay-time/ (shortest path- wieghted)
+
+class Solution {
+public:
+    int networkDelayTime(vector<vector<int>>& times, int n, int k) {
+        // Level order traversal : bfs -> but since its weighted we maintain a *priority queue*
+        // maintain runninng max for time & visited set also
+        // at last check if visited set size == n, if not then return -1 else return running max 
+        unordered_set<int> visited;//we could use array of size n also for this(more effective)
+        // Weighted BFS(weighted level order traversal) => priority queue
+        //Minimum priority queue : syntax
+        priority_queue<pair<int,int>, vector<pair<int,int>>, greater<pair<int,int>>> pq; // <time,node> :sort by time 
+        int i,j,time=0,tmax=0;
+        
+        vector<vector<pair<int,int>>> adj(n);// ui :<vi,weight>
+        for(const auto& x:times){
+            adj[x[0]-1].push_back({x[1]-1,x[2]});//buidling graph (0 : n-1)
+        }
+        k=k-1;//making 0 based nodes
+        pq.push({time,k});//pushing initial node k into the pq
+        
+        // Level order traversal
+        while(!pq.empty()){
+            int t,node;
+            t = pq.top().first, node = pq.top().second; 
+            pq.pop();
+            visited.insert(node);
+            tmax = max(tmax,t);
+            
+            if(visited.size()==n) return tmax;//this has to be inside the loop
+            //Push all neighbours
+            for(const auto& nbr:adj[node]){
+                if(visited.find(nbr.first)==visited.end()){//unvisited nbr
+                    pq.push({ t + nbr.second , nbr.first});//{t+wt,nxt_node}                    
+                }                    
+            }
+        }
+        if(visited.size()==n) return tmax;
+        return -1;
+    }
+};
+// NOTE: think about cycles also : edge cases
+/*
+[[1,2,1],[2,1,3]]
+2
+2
+ans= 1
+
+[[1,2,1],[2,3,2],[1,3,4]]
+3
+1
+ans=3
+*/
+
 //===================================================================================================
+// :: https://www.codingninjas.com/codestudio/problems/path-with-maximum-and-minimum-value_1281861
+// :: https://leetcode.com/problems/find-the-city-with-the-smallest-number-of-neighbors-at-a-threshold-distance/
+
 //===================================================================================================
 //===================================================================================================
 //===================================================================================================
