@@ -13,8 +13,8 @@ Question List:
 10- uber oa || 14/01/2022 || question 4 (convert base2 to base6) : repeated
 11- uber oa || 14/01/2022 || 
 12- uber oa || 14/01/2022 || modification of burst balloons
-13- uber hacktag :: https://codeforces.com/problemset/problem/830/A
-14- 
+13- uber hacktag 1.0 :: Office and Keys :: https://codeforces.com/problemset/problem/830/A
+14- uber past qn :: Xor Pyramid :: https://codeforces.com/contest/983/problem/B
 */
 
 //=================================================================================================
@@ -525,7 +525,7 @@ public:
 
 //=================================================================================================
 // Uber hacktag :: https://codedaily.in/uber-hack-tag-questions/
-// https://codeforces.com/problemset/problem/830/A
+// Ofiice and Keys(codeforces-1800) = Drivers and Batteries(uber hacktag) :: https://codeforces.com/problemset/problem/830/A
 #include<bits/stdc++.h>
 using namespace std;
 #define int long long int
@@ -565,7 +565,8 @@ void __f(const char* names, Arg1&& arg1, Args&&... args) {
     const char* comma = strchr(names + 1, ',');
     cout.write(names, comma - names) << " : " << arg1 << " | "; __f(comma + 1, args...);
 }  
- 
+//main soln part starts here (upar tak template hai khali) 
+
 const int maxm = 2*1e3+5;
 int a[maxm],b[maxm];
 int n,k,p;
@@ -608,6 +609,91 @@ int32_t main()
     // while(t--)
     solve();
     return 0;
+} 
+// 1LL check ?
+
+//=================================================================================================
+// Uber Past qn :  https://codeforces.com/contest/983/problem/B
+
+#include <bits/stdc++.h>
+ 
+using namespace std;
+ 
+int run();
+ 
+int main() {
+#ifdef home
+  freopen("i", "r", stdin);
+  freopen("d", "w", stderr);
+#endif
+  cout.precision(15);
+ 
+  ios::sync_with_stdio(false);
+  cin.tie(nullptr);
+  cout.tie(nullptr);
+ 
+  run();
 }
  
-// 1LL check ?
+const int N = 5000;
+ 
+int a[N];
+ 
+int dp[N][N];
+ 
+int run() {
+  int n;
+  cin >> n;
+  for (int i = 0; i < n; i++) {
+    cin >> a[i];
+    dp[0][i] = a[i];
+  }
+  for (int i = 1; i < n; i++) {
+    for (int j = 0; j <= n - i; j++) {
+      dp[i][j] = dp[i - 1][j + 1] ^ dp[i - 1][j];
+    }
+  }
+ 
+  for (int i = 1; i < n; i++) {
+    for (int j = 0; j < n - i; j++) {
+      dp[i][j] = max({dp[i][j], dp[i - 1][j], dp[i - 1][j + 1]});
+    }
+  }
+ 
+  int q;
+  cin >> q;
+ 
+  for (int i = 0; i < q; i++) {
+    int l, r;
+    cin >> l >> r;
+    --l;
+    int len = r - l - 1;
+    cout << dp[len][l] << '\n';
+  }
+}
+//=================================================================================================
+// uber hacktag 2.0
+/*
+ - nikki :: https://www.geeksforgeeks.org/a-program-to-check-if-strings-are-rotations-of-each-other/
+ - nikki :: 
+ - shadab ::
+ - kanisht ::
+ - unnat :: 
+
+
+*/
+//=================================================================================================
+
+//=================================================================================================
+
+//=================================================================================================
+
+//=================================================================================================
+
+//=================================================================================================
+
+//=================================================================================================
+
+//=================================================================================================
+
+//=================================================================================================

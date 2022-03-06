@@ -38,6 +38,15 @@ Graphs Problem List:
     ○ Leetcode 133. Clone Graph :: https://leetcode.com/problems/clone-graph/
     ○ Leetcode 1254. Number of Closed Islands
 
+--------------------
+Leetcode Premium Problem resources:
+    - For exact questions only :: https://leetcode.ca/all/problems.html
+    - 
+    - codestudio search pblm
+    - binarysearch 
+    - lintcode
+    
+--------------------
 
 *****************************************************************************************************/
 // Leetcode 200. Number of Islands :: https://leetcode.com/problems/number-of-islands/
@@ -764,10 +773,14 @@ ans=3
 */
 
 //===================================================================================================
+// (premium)Leetcode 1102. Path With Maximum Minimum Value 
 // :: https://www.codingninjas.com/codestudio/problems/path-with-maximum-and-minimum-value_1281861
-// :: https://leetcode.com/problems/find-the-city-with-the-smallest-number-of-neighbors-at-a-threshold-distance/
+// https://leetcode.ca/all/1102.html
+
 
 //===================================================================================================
+// Leetcode 1334. Find the City With the Smallest Number of Neighbors at a Threshold Distance:: https://leetcode.com/problems/find-the-city-with-the-smallest-number-of-neighbors-at-a-threshold-distance/
+// Leetcode 1192. Critical Connections in a Network:: https://leetcode.com/problems/critical-connections-in-a-network/
 //===================================================================================================
 //===================================================================================================
 //===================================================================================================
