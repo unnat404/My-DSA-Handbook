@@ -26,8 +26,9 @@ ans: 772
 ans: 1234
 */
 
-=====
+// =============================================================================
 // Kanisht : adv round:: 
+// https://www.geeksforgeeks.org/multiset-erase-in-c-stl/
 #include <iostream>
 #include <bits/stdc++.h>
 using namespace std;
@@ -79,23 +80,17 @@ void solve()
 {
     int n;
     cin >> n;
-
     int a[n];
-
     for (int i = 0; i < n; i++)
     {
         cin >> a[i];
     }
-
     priority_queue<int, vector<int>, greater<int>> pq;
-
     int sum = 0;
-
     for (int i = 0; i < n; i++)
     {
         sum += a[i];
         pq.push(a[i]);
-
         if (sum < 0)
         {
             int a = pq.top();
@@ -103,12 +98,11 @@ void solve()
             pq.pop();
         }
     }
-
     cout << pq.size();
 }
 //======================================
 //nanini: https://codeforces.com/problemset/problem/660/A (similar not exatly same)
-// gcd wala - kanisht ka(not sure that its right 100%)
+// gcd wala - Unnat's Code- 100% tc passed
  
 // ll gcd(ll a, ll b) {return (b == 0) ? a : gcd(b, a % b);} 
 
@@ -140,40 +134,87 @@ int main()
 
 
 // =================================================
-// advantage round : Hrishabh
+// advantage round : Hrishabh 6/3/22 (50% passed by kanisht)
 
-#include <iostream>
-#include <algorithm>
-#include <bits/stdc++.h>
-using namespace std;
-
-int main()
+int n,m,K;
+ll dp[1001][1001];
+ 
+int ans(int i,int j)
 {
-    long long n,i,j,count=0,t,mod=1e9+7,m,k,tx,ty;
-    vector<long long> ans;
-    cin>>t;
-    vector<vector<int>> dp(1000,vector<int>(1000,0));
-    dp[0][0]=1;
+    if(i==n && j==m)
+        return 1;
+ 
+    if(i>n || j>m)
+    {
+        return 0;
+    }
+    if(dp[i][j]!=-1)
+        return dp[i][j];
+    
+    ll sum=0;
+    for(int w=1;w<=K;w++)
+    {
+        sum=((sum%mod)+(ans(i+w,j)%mod))%mod;
+        sum%=mod;        
+        sum=((sum%mod)+(ans(i,j+w)%mod))%mod;
+        sum%=mod;
+        sum=((sum%mod)+(ans(i+w,j+w))%mod)%mod;
+        sum%=mod;
+    }
+    return dp[i][j]=sum;
+}
+ 
+vector<int>solve(int T,vector<vector<int>>a){
+    vector<int>b;
+  
+    for(int i=0;i<T;i++)
+    {
+        memset(dp,-1,sizeof(dp));
+        n=a[i][0];
+        m=a[i][1];
+        K=a[i][2];
+        int p=ans(1,1);
+        b.push_back(p);
+    }
+    return b;
+}
+//-------------
+// unnat's code(not correct)
+
+// #include <iostream>
+// #include <algorithm>
+// #include <bits/stdc++.h>
+// using namespace std;
+
+// int main()
+// {
+//     long long n,i,j,count=0,t,mod=1e9+7,m,k,tx,ty;
+//     vector<long long> ans;
+//     cin>>t;
+//     vector<vector<int>> dp(1000,vector<int>(1000,0));
+//     dp[0][0]=1;
     
 
-    while(t--){
-        cin>>n>>m>>k;// later-optimize: by taking max of x,y dp matrix
-        for(i=0;i<n;i++){
-            for(j=0;j<m;j++){
-                if(i==0 && j==0) continue;
-                tx= min(i,k),ty=min(j,k);
-                for(int x=i-tx;x<i;x++){
-                    for(int y=j-ty;y<j;y++){
-                        dp[i][j]=(dp[i][j]+dp[x][y])%mod;
-                    }
-                }
-            }
-        }  
-        ans.push_back(dp[n-1][m-1]);
-    }
-    vector<int> v(n);
-    for(const auto& i:ans) cout<<i<<"\n";
+//     while(t--){
+//         cin>>n>>m>>k;// later-optimize: by taking max of x,y dp matrix
+//         for(i=0;i<n;i++){
+//             for(j=0;j<m;j++){
+//                 if(i==0 && j==0) continue;
+//                 tx= min(i,k),ty=min(j,k);
+//                 for(int x=i-tx;x<i;x++){
+//                     for(int y=j-ty;y<j;y++){
+//                         dp[i][j]=(dp[i][j]+dp[x][y])%mod;
+//                     }
+//                 }
+//             }
+//         }  
+//         ans.push_back(dp[n-1][m-1]);
+//     }
+//     vector<int> v(n);
+//     for(const auto& i:ans) cout<<i<<"\n";
 
-    return 0;
-}
+//     return 0;
+// }
 
+//=========================
+// find number of different arrays such that product of any two consecutive elements of array is <= k
