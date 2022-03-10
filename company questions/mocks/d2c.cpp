@@ -350,14 +350,157 @@ int main() {
 }
 // ====================================================================
 /*
-Q) Mock
+Q) Mock 4.1
+A Tri-Prime number is a natural number with exactly 1 factor other than 1 and itself.
+You need to find how many Tri-Prime numbers less than or equal to N are there.
+You need to answer T such test cases.
 
+constraints: 
+1<=T<=1e5
+1<=N<=1e12
+i/p: 2 3 5
+o/p: 0 1
+
+i/p: 1 10
+o/p: 2
 */
+/* Tri-Prime Numbers are just squares of prime numbers.
+Precompute all the Prime Numbers less than 10^6,
+then store their squares in a vector/array,
+then use upper_bound to answer the queries in O(logN) */
+ 
+#include<bits/stdc++.h>
+using namespace std;
+#define ll long long
+const ll N=1e6;
+ 
+vector<ll> tp;
+int is_prime[N];
+ 
+void sieve()
+{
+   for(int i=2; i<N; i++) is_prime[i]=1;
+   for(ll i=2; i<N; i++)
+   {
+       if(is_prime[i])
+       {
+           tp.push_back(i*i);
+           for(ll j=i*i; j<N; j+=i)
+               is_prime[j]=0;
+       }
+   }
+}
+ 
+int main()
+{
+   sieve();
+   int tc; cin>>tc;
+   while(tc--)
+   {
+       ll n; cin>>n;
+       ll x = upper_bound(tp.begin(),tp.end(),n) - tp.begin();
+       cout<<x<<endl;
+   }
+}
 // ====================================================================
 /*
-Q) Mock
+Q) Mock 4.2
+You are given an array A of N integers. 
+Across all i, j (1 ≤ i ≤ j ≤ N), find the distinct values of A[i] | A[i+1] | … | A[j] 
 
+constraints:
+1<=n<=1e5
+0<=A[i]<=1e6
+
+i/p:
+2
+1 2
+o/p:
+3
+1 2 3
+
+i/p:
+5
+0 1 2 3 4
+o/p:
+6 
+0 1 3 4 7 
 */
+#include<bits/stdc++.h>
+using namespace std ;
+using ll = long long ;
+ 
+int main() {
+ 
+	ios::sync_with_stdio(0) ;
+	cin.tie(0) ;
+ 
+	int n ; cin >> n ;
+	set<int> ans, ORs ;
+	ORs.insert(0) ; 
+	for(int i = 0 ; i < n ; ++i) {
+		int x; cin >> x ;
+		set<int> temp ;
+		for(auto j : ORs) {
+			ans.insert(j | x) ;
+			temp.insert(j | x) ;
+		}
+		ORs = temp ;
+		ORs.insert(0) ;
+	}
+ 
+	cout << ans.size() << '\n';
+       for(auto i : ans) cout << i << " " ;
+ 
+	return 0 ;
+}
 // ====================================================================
+/*
+Q) Mock 4.3
+You are given an integer N and an array A of length 2N + 1. 
+You have to add xi to A[i] (1 ≤ i ≤ 2N + 1), such that x1 + x2 + … + x2N+1 = S
+You have to choose xi such that it maximizes the median of the array A after the above operation.
+
+constraints:
+1<=N<=1e5
+0<=S,A[i]<=1e9
+i/p:
+1 3 
+5 1 20
+o/p:
+8
+*/
+#include<bits/stdc++.h>
+using namespace std ;
+using ll = long long ;
+ 
+int main() {
+ 
+	int n, k; cin >> n >> k;
+	vector<ll> v(n) ;
+	for(auto &i : v) cin >> i ;
+	sort(v.begin(), v.end()) ;
+	v.push_back(1e18) ;
+	int idx = n/2;
+	ll ans = v[idx] ; 
+ 
+	while(k > 0 and idx < n) {
+		ll d = v[idx+1] - v[idx] ;
+		if(idx < n-1 and (idx - n/2 + 1) * d <= k) {
+		    k -= (idx - n/2 + 1) * d ;
+		    ++idx;
+		    ans = v[idx];
+		}
+		else {
+			ans += (k / (idx - n/2 + 1)) ;
+			k -= (idx - n/2 + 1) * (k / (idx - n/2 + 1)) ;
+			break ;
+		}
+	}
+ 
+	cout << ans ;
+ 
+	return 0 ;
+}
 // ====================================================================
 // ====================================================================
