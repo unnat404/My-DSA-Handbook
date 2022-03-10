@@ -183,24 +183,171 @@ int main(){
 }
 // ====================================================================
 /*
-Q) Mock
+Q) Mock 3.1
+You are given an array A  which consists of N positive integers.Now you want to put all this elements in another container.So you start with first element of the array A i.e, at index 1  and move towards index N , and for each index  you perform the following operation:
+Put the element at the top of the container.
+rotate the container by 180 degrees.
+After you put all the elements in the container,your task is to print the elements of this container from bottom to top.
 
+Constraints:
+1<=N<=2*1e5
+0 <=x[i]<= 1e9
+------------
+i/p: 
+3
+1 2 3
+o/p: 3 1 2
+------------
+i/p:
+2
+5 6
+o/p: 6 5
+------------
 */
+#include<bits/stdc++.h>
+using namespace std;
+int main() {
+	ios_base::sync_with_stdio(false);
+	cin.tie(NULL);
+	cout.tie(NULL);
+	int n;
+	cin >> n;
+	assert(n >= 1 && n <= 2e5);
+	int a[n];
+	for (int i = 0; i < n; i++)cin >> a[i], assert(a[i] >= 0 && a[i] <= 1e9);
+	deque<int>q;
+	for (int i = 0; i < n; i++) {
+		if (i & 1) {
+			q.push_back(a[i]);
+		} else
+			q.push_front(a[i]);
+	}
+	vector<int>ans;
+	while (!q.empty()) {
+		ans.push_back(q.front());
+		q.pop_front();
+	}
+	if (n % 2 == 0) {
+		int i = 0, j = n - 1;
+		while (i < j) {
+			swap(ans[i++], ans[j--]);
+		}
+	}
+	for (int x : ans)cout << x << " ";
+	cout << '\n';
+	return 0;
+}
+// ====================================================================
+/*
+Q) Mock 3.2
+There are N doors in a corridor and the i-th door has an integer X[i] written on it. You have to paint each door a colour. However, the condition is that if the i-th and j-th door are painted with the same colour, where i < j, then X[i] < X[j].
+What is the minimum number of colours you need to paint every door?
+CONSTRAINTS:
+1 <= N <= 10^5
+0 <= x[i] <= 10^9
+
+Constraints:
+1<=N<=2*1e5
+0 <=A[i]<= 1e9
+------------
+i/p: 
+5
+3 2 5 6 4
+o/p: 2
+------------
+*/
+#include<bits/stdc++.h>
+using namespace std;
+int a[100005];
+int main() {
+    int n,p,k = 0,tmp;
+    cin >> n;
+    while (n--){
+   	 cin >> p;
+   	 tmp = upper_bound(a,a + k,p,greater< int >()) - a;
+   	 if (tmp == k){
+   		 a[k] = p;
+   		 ++ k;
+   	 }
+   	 else a[tmp] = p;
+    }
+    cout << k << endl;
+}
 // ====================================================================
 /*
 Q) Mock
 
 */
+#define long long ll
+int main() {
+    ll i,x,n,count=1,mx;
+    cin>>n;
+    vector<ll> v(n);
+    for(i=0;i<n;i++){
+        cin>>v[i];
+    }
+    mx=v[n-1];
+    for(i=n-2;i>=0;i--){
+        if(v[i]>=mx){
+            mx=max(mx,v[i]);
+            count++;
+        }
+    }
+    cout<<mx;
+
+    /* Enter your code here. Read input from STDIN. Print output to STDOUT */    
+    return 0;
+}
 // ====================================================================
 /*
-Q) Mock
+Q) Mock 3.3
+You are given an integer K and an integer sequence X of length N, X = (X[1], X[2], ..., X[N]). You need to find the number of integer pairs (i, j) such that i <= j and K divides X[i] + X[i+1] + ... + X[j].
+CONSTRAINTS:
+2 <= K <= 10^9
+1 <= X[i] <= 10^9
+1 <= N <= 10^5
+All input values are integers
 
+Constraints: 
+2<=K<=1e9
+1<=X[i]<=1e9
+1<=N<=1e9
+------------
+Sample #0:
+i/p : 
+3 2 
+2 1 3
+o/p : 3
+------------
+Sample #1:
+i/p : 
+1 5 
+25 
+o/p : 1
+------------
 */
-// ====================================================================
-/*
-Q) Mock
+#include<bits/stdc++.h>
+using namespace std;
+long long sum,ans,n,m,x;
+map<long int,long int>mp;
 
-*/
+int main() {
+  cin>>n>>m;
+  ans=0;
+  sum=0;
+  mp[0]=1;
+ 
+  for(int i=0;i<n;i++) {
+      cin>>x;
+      sum=sum+x;
+      sum=sum%m;
+      
+      ans= ans+mp[sum];
+      mp[sum]++;
+  }
+ 
+  cout<<ans<<endl;
+}
 // ====================================================================
 /*
 Q) Mock
