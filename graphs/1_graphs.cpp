@@ -22,11 +22,19 @@ Graphs Problem List:
     - Leetcode  1162. As Far from Land as Possible :: https://leetcode.com/problems/as-far-from-land-as-possible/
     - (to do)Leetcode premium 269:: Alien Dictionary :: https://leetcode.com/problems/alien-dictionary/
         - (to do)Lintcode :: Alien Dictionary :: https://www.lintcode.com/problem/892/
+        - https://practice.geeksforgeeks.org/problems/alien-dictionary/1/
+        - https://www.codingninjas.com/codestudio/problem-details/alien-dictionary_630423 || 
+        - topo sort qn
     - Leetcode 743. Network Delay Time :: https://leetcode.com/problems/network-delay-time/ (shortest path- wieghted)
+    - (to do)Leetcode 1102. Path with Maximum Minimum value :: https://leetcode.ca/all/1102.html
+        - codestudio link:: https://www.codingninjas.com/codestudio/problems/path-with-maximum-and-minimum-value_1281861
+    - (to do)Leetcode:: 1334. Find the City With the Smallest Number of Neighbors at a Threshold Distance :: https://leetcode.com/problems/find-the-city-with-the-smallest-number-of-neighbors-at-a-threshold-distance/
+        - https://cp-algorithms.com/graph/all-pair-shortest-path-floyd-warshall.html
+    - (to do)Leetcode 1192. Critical Connections in a Network :: https://leetcode.com/problems/critical-connections-in-a-network/
+        - question on bridges 
     - 
-    -
-    -
-    
+
+
  -> To Do:
     - https://leetcode.com/problems/groups-of-strings/
     -* https://leetcode.com/problems/k-highest-ranked-items-within-a-price-range/ 
@@ -40,7 +48,7 @@ Graphs Problem List:
 
 --------------------
 Leetcode Premium Problem resources:
-    - For exact questions only :: https://leetcode.ca/all/problems.html
+    - For exact leetcode questions + company tags :: https://leetcode.ca/all/problems.html
     - 
     - codestudio search pblm
     - binarysearch 
@@ -49,6 +57,11 @@ Leetcode Premium Problem resources:
 --------------------
 
 *****************************************************************************************************/
+
+// =======================================================================================================================================
+#include <bits/stdc++.h>
+using namespace std;
+// =======================================================================================================================================
 // Leetcode 200. Number of Islands :: https://leetcode.com/problems/number-of-islands/
 class Solution {
 public:
@@ -715,8 +728,89 @@ public:
 // Leetcode premium 269:: https://leetcode.com/problems/alien-dictionary/
 // Lintcode :: https://www.lintcode.com/problem/892/
 
+// Practice Link : https://practice.geeksforgeeks.org/problems/alien-dictionary/1/#
+#include <bits/stdc++.h>
+using namespace std; 
 
-// question on topo sort
+class Solution{
+    public:
+    string findOrder(string dictionary[], int n, int K) {
+        // Construct the graph
+        // Node are letters
+        // a->b iff a<b
+        // Adjacency List
+        unordered_map<char,unordered_set<char>> graph;// choice of this data structure is imp 
+        // unordered_map<char,vector<char>> graph;
+        int i,j,x,y;
+        vector<char> ans;
+        unordered_map<char,int> indegree;
+        
+        // initializing indegree and graph keys ----------------------------------------------------------------
+        for(i=0;i<n;i++){
+            for(j=0;j<dictionary[i].size();j++){
+                if(graph.find(dictionary[i][j]) == graph.end()){
+                    indegree[dictionary[i][j]] = 0;
+                    graph[dictionary[i][j]] = {};//empty map value
+                }
+            }
+        }
+        // Constructing graph & indegree calculation -----------------------------------------------------------
+        for(i=0;i<n-1;i++){
+            j=i+1;
+            // transitive depedencies are taken care of even if we just add relation betwen i and i+1 elements
+            x=y=0;
+            if(dictionary[i]==dictionary[j]) continue;
+            while(x<dictionary[i].size()  && y<dictionary[j].size() && dictionary[i][x] == dictionary[j][y] ){
+                x++,y++;
+            }
+            
+            // if dictionary[j] is a prefix of dictionary[i]
+            if(y == dictionary[j].size()) return "";        
+            if(x == dictionary[i].size()) continue;
+            // for 1st different positions in adjacent words we map the relationship
+            if(graph[dictionary[i][x]].find(dictionary[j][y]) == graph[dictionary[i][x]].end()){
+                // graph[dictionary[i][x]].push_back(dictionary[j][y]);
+                graph[dictionary[i][x]].insert(dictionary[j][y]);
+                indegree[dictionary[j][y]]++;//assuming default start value is 0   
+            }          
+        }
+
+        // Topo Sort ---------------------------------------------------------------------------------------------
+        // We take all nodes whose indegree = 0 => all of them can be the current smallest charector => push them in queue  
+        queue<char> q;
+        for(auto& node:indegree){
+            if(node.second == 0) q.push(node.first);
+        }
+        
+        while(!q.empty()){
+            char ch=q.front();
+            ans.push_back(ch);// current smallest element is pushed in ans & poped from queue
+            q.pop();
+            for(auto& nbr: graph[ch]){ // visit all neighbour's of ch (=> elements greater than ch)
+                indegree[nbr]--;// since we remove ch => its indegree contribution to its nbr is accounted for so remove it 
+                if(indegree[nbr]==0) q.push(nbr);
+                // if after decreasing the indegree of the nbr == 0 => now its level has been reached & can be pushed on the queue
+            }        
+        }        
+        string res="";
+        // Note: K = graph.size()
+        if(ans.size() == graph.size()){
+            for(auto& x:ans) res+=x;
+        }
+        return res;
+        
+    }
+};
+
+// above question was on topo sort
+/*
+NOTE: for some problems its very hard to understand if its a graph problem, so reverse engineer it, meaning:
+Since graphs have very few/limited algorithms (like connectivity, cyclicity, shortest path(weighted and unweighted), topological sort, union find),
+so the best part about graphs is you can try applying each one of them and see if its a graph problem or not.
+
+So for eg: for Q)Leetcode 269.Alien Dictionary :: we have to order something(=>its an ordering problem)
+So one of the ways we can think of is: it may be Topological Sort(since ordering) if graph problem and try applying it
+*/
 //===================================================================================================
 // Leetcode 743. Network Delay Time :: https://leetcode.com/problems/network-delay-time/ (shortest path- wieghted)
 
@@ -726,9 +820,9 @@ public:
         // Level order traversal : bfs -> but since its weighted we maintain a *priority queue*
         // maintain runninng max for time & visited set also
         // at last check if visited set size == n, if not then return -1 else return running max 
-        unordered_set<int> visited;//we could use array of size n also for this(more effective)
+        unordered_set<int> visited;//we could use array of size n also for this question where nodes are in [0...N-1] (it would have ben more effective)
         // Weighted BFS(weighted level order traversal) => priority queue
-        //Minimum priority queue : syntax
+        // Minimum priority queue (of pair) : syntax
         priority_queue<pair<int,int>, vector<pair<int,int>>, greater<pair<int,int>>> pq; // <time,node> :sort by time 
         int i,j,time=0,tmax=0;
         
@@ -741,18 +835,20 @@ public:
         
         // Level order traversal
         while(!pq.empty()){
-            int t,node;
-            t = pq.top().first, node = pq.top().second; 
+            int t_curr,node;
+            t_curr = pq.top().first, node = pq.top().second; 
             pq.pop();
             visited.insert(node);
-            tmax = max(tmax,t);
+            tmax = max(tmax,t_curr);
             
             if(visited.size()==n) return tmax;//this has to be inside the loop
-            //Push all neighbours
+            // Push all neighbours
             for(const auto& nbr:adj[node]){
                 if(visited.find(nbr.first)==visited.end()){//unvisited nbr
-                    pq.push({ t + nbr.second , nbr.first});//{t+wt,nxt_node}                    
-                }                    
+                    pq.push({ t_curr + nbr.second , nbr.first});//{t+wt,nxt_node}                    
+                }
+                // visited nodes must be ignored/not visited again so as to avoid any infinite loops in case of cycles
+                // therefore visit each node at most once                    
             }
         }
         if(visited.size()==n) return tmax;
@@ -777,11 +873,121 @@ ans=3
 // :: https://www.codingninjas.com/codestudio/problems/path-with-maximum-and-minimum-value_1281861
 // https://leetcode.ca/all/1102.html
 
+#include <iostream>
+#include<bits/stdc++.h>
+using namespace std;
+vector<vector<int>> dirs = {{1,0},{-1,0},{0,1},{0,-1}};
+int pathWithMaxMinValue(vector<vector<int>> &arr)
+{
+    int m=arr.size(),n=arr[0].size() ,i,j,ans=-1;
+    vector<vector<bool>> visited(m,vector<bool>(n,false));
+    // Priority queue of vector :: less() is the inbuilt comparator for max-heap by 1st element of vector
+    priority_queue<vector<int>, vector<vector<int>>, less<vector<int>> > pq;
+    
+    pq.push({arr[0][0],0,0});
+    while(!pq.empty()){
+        vector<int> t = pq.top();
+        pq.pop();
+        if(visited[t[1]][t[2]]) continue;
+        visited[t[1]][t[2]] = true;
+        
+        if(t[1]==m-1 && t[2]==n-1) ans=max(ans,t[0]);
+        for(auto& dir:dirs){
+            int x = dir[0]+t[1], y = dir[1]+t[2];
+            if(x<0 || y<0 || x>=m || y>=n || visited[x][y])
+                continue;
+            pq.push({min(arr[x][y],t[0]),x,y});
+        }
+    }
+    return ans;
+    
+}
+// Driver Code ::
+int main()
+{
+    // vector<vector<int>> g ={{2,3,4},{1,2,3},{3,23,4}};
+    vector<vector<int>> g ={{5,4,5},{1,2,6},{7,4,6}};
+    cout<<pathWithMaxMinValue(g);//o/p :: 4 for above graph 
 
+    return 0;
+}
 //===================================================================================================
 // Leetcode 1334. Find the City With the Smallest Number of Neighbors at a Threshold Distance:: https://leetcode.com/problems/find-the-city-with-the-smallest-number-of-neighbors-at-a-threshold-distance/
-// Leetcode 1192. Critical Connections in a Network:: https://leetcode.com/problems/critical-connections-in-a-network/
+// https://cp-algorithms.com/graph/all-pair-shortest-path-floyd-warshall.html
+/*
+NOTE: APSP (all pair shortest path -> Floyd Warshall)
+A(i)(j)(k) = minimum metric(eg: path sum) to reach form node I to node j ;  with intermediate nodes belonging to the set: {v0,v1,…,vk} 
+
+
+Things we need to consider: 
+	1. Order of iteration (/order of filling the table):
+		a. Form the recursive relation its clear we need to fill the minimum k first ,i.e, since A(ijk) is dependent on A(ij(k-1)) therefore we fill the table for k=0 first then for k=1,…. & so on
+	2. Base Case
+		a. dp(ij) = -1 ; if no edge between nodes i & j
+		b. dp(ij) = Wij ; if there is a edge between node i & j and weight of the edge is Wij
+	3. Space Optimization: 
+		a. Can it be done with 2 matrices ? 
+			i. Yes, one for previous k, and one for current k
+		b. **Can it be done with just 1 matrix ? 
+			i. YES , we know the matrix will be updated and that we cannot avoid , now we see that the updated values and previous values are same/ not changed so it wont affect our ans, therefore using only 1 matrix will suffice.
+               Another way to think about it is : the updated value id the same as the previous value so storing the previous value in another matrix is not needed.
+			ii. Recursion: A(i)(j)(k) = min( A(i)(j)(k-1), A (i)(k)(k-1) + A(k)(j)(k-1)
+			iii. We see that : A(i)(k)(k-1) = A(i)(k)(k) ; since going form I to k with intermediate nodes as v0,v1,..,vk-1 is same as   going form I to k with intermediate nodes as v0,v1,..,vk ; ( otherwise it would imply that there is a self loop/cycle in the  graph and making path sum infinite )
+			iv. Similar case for : A(k)(j)(k-1) = A(k)(j)(k)	
+*/
+
+class Solution {
+public:
+    int findTheCity(int n, vector<vector<int>>& edges, int distanceThreshold) {
+        // Floyd Warshall Algo ----------------------------------------------------
+        vector<vector<pair<int,int>>> graph(n);
+        vector<vector<int>> dp(n, vector<int>(n,INT_MAX));
+        int i,j,k,count,res=INT_MAX,res_vertex;
+        
+        for(const auto& edge : edges){
+            graph[edge[0]].push_back({edge[1],edge[2]});
+            graph[edge[1]].push_back({edge[0],edge[2]});
+            // Base Case.
+            dp[edge[0]][edge[1]] = edge[2];// these value can be changed later on
+            dp[edge[1]][edge[0]] = edge[2];
+        }
+        
+        //Base Case.
+        for(i=0;i<n;i++){
+            dp[i][i]=0;
+        }
+        
+        for(k=0; k<n ; k++){
+            for(i=0;i<n;i++){
+                for(j=0;j<n;j++){
+                    if(dp[i][k]!=INT_MAX && dp[k][j]!=INT_MAX){
+                        dp[i][j] = min(dp[i][j],dp[i][k]+dp[k][j]);
+                    }
+                }
+            }
+        }
+        
+        // Part specific for this question ----------------------------------------
+        for(i=0;i<n;i++){
+            int count=0;
+            for(j=0;j<n;j++){
+                if(dp[i][j]<=distanceThreshold){
+                    count++;          
+                }                
+            }
+            if(count<=res){
+                res_vertex = i;
+                res = count;
+            }
+        }
+        return res_vertex;        
+        
+    }
+};
+
 //===================================================================================================
+// Leetcode 1192. Critical Connections in a Network:: https://leetcode.com/problems/critical-connections-in-a-network/
+
 //===================================================================================================
 //===================================================================================================
 
