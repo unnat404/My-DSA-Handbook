@@ -1,7 +1,8 @@
 
 
-=======================================
+// =======================================
 // Nandini Morgan Stanley OA || 23-02-2022
+//  Note: this soln passed 11/12 test cases
 #include <iostream>
 #include <bits/stdc++.h>
 // #include <iostream>
@@ -63,4 +64,4 @@ int main()
     return 0;
 }
 // ans = 44
-==============================================
+// ==============================================

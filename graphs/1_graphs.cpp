@@ -21,17 +21,17 @@ Graphs Problem List:
     - Leetcode 542. 01 Matrix :: https://leetcode.com/problems/01-matrix/
     - Leetcode  1162. As Far from Land as Possible :: https://leetcode.com/problems/as-far-from-land-as-possible/
     - (to do)Leetcode premium 269:: Alien Dictionary :: https://leetcode.com/problems/alien-dictionary/
-        - (to do)Lintcode :: Alien Dictionary :: https://www.lintcode.com/problem/892/
+        - (to do/done)Lintcode :: Alien Dictionary :: https://www.lintcode.com/problem/892/
         - https://practice.geeksforgeeks.org/problems/alien-dictionary/1/
         - https://www.codingninjas.com/codestudio/problem-details/alien-dictionary_630423 || 
         - topo sort qn
     - Leetcode 743. Network Delay Time :: https://leetcode.com/problems/network-delay-time/ (shortest path- wieghted)
-    - (to do)Leetcode 1102. Path with Maximum Minimum value :: https://leetcode.ca/all/1102.html
+    - (to do/done)Leetcode 1102. Path with Maximum Minimum value :: https://leetcode.ca/all/1102.html
         - codestudio link:: https://www.codingninjas.com/codestudio/problems/path-with-maximum-and-minimum-value_1281861
-    - (to do)Leetcode:: 1334. Find the City With the Smallest Number of Neighbors at a Threshold Distance :: https://leetcode.com/problems/find-the-city-with-the-smallest-number-of-neighbors-at-a-threshold-distance/
+    - (to do/done)Leetcode:: 1334. Find the City With the Smallest Number of Neighbors at a Threshold Distance :: https://leetcode.com/problems/find-the-city-with-the-smallest-number-of-neighbors-at-a-threshold-distance/
         - https://cp-algorithms.com/graph/all-pair-shortest-path-floyd-warshall.html
     - (to do)Leetcode 1192. Critical Connections in a Network :: https://leetcode.com/problems/critical-connections-in-a-network/
-        - question on bridges 
+        - question on bridges (Tarjan's algo)
     - 
 
 
@@ -397,7 +397,7 @@ char dir[4]={'R','D','L','U'};// is this direction of visiting imp?? maybe?? i d
 // char dir[4]={'L','D','R','U'};
 void dfs(int x,int y,string &island,vector<vector<int>> &matrix){
     int n=matrix.size(),m=matrix[0].size();
-    matrix[x][y]=2;
+    matrix[x][y]=2;//marking matrix itself as visited
 
     for(int i=0;i<4;i++){
         int a=x+dx[i],b=y+dy[i];
@@ -465,7 +465,7 @@ public:
                 cur_path[nbr]=true;
                 visited[nbr]=1;
                 cycle= cycle || checkCycle(nbr,visited,cur_path,adj);
-                cur_path[nbr]=false;
+                cur_path[nbr]=false;// during backtracking remove this node from cur_path
             }            
         }return cycle;
     }
@@ -543,7 +543,7 @@ true
 //===================================================================================================
 // Leetcode 210. Course Schedule II :: https://leetcode.com/problems/course-schedule-ii/
 // tags : uber, topo sort
-#import <bits/stdc++.h>
+// #include <bits/stdc++.h>
 class Solution {
 public:
    
@@ -727,8 +727,8 @@ public:
 //===================================================================================================
 // Leetcode premium 269:: https://leetcode.com/problems/alien-dictionary/
 // Lintcode :: https://www.lintcode.com/problem/892/
-
-// Practice Link : https://practice.geeksforgeeks.org/problems/alien-dictionary/1/#
+// Practice Link 1:https://www.codingninjas.com/codestudio/problems/alien-dictionary_630423
+// *Practice Link 2: https://practice.geeksforgeeks.org/problems/alien-dictionary/1/#
 #include <bits/stdc++.h>
 using namespace std; 
 
@@ -756,7 +756,9 @@ class Solution{
         }
         // Constructing graph & indegree calculation -----------------------------------------------------------
         for(i=0;i<n-1;i++){
-            j=i+1;
+            j=i+1;// here we are capturing relations between all adjancent words only,
+            // as relation between other words are transitive and can be derieved from this graph itself
+
             // transitive depedencies are taken care of even if we just add relation betwen i and i+1 elements
             x=y=0;
             if(dictionary[i]==dictionary[j]) continue;
@@ -765,8 +767,8 @@ class Solution{
             }
             
             // if dictionary[j] is a prefix of dictionary[i]
-            if(y == dictionary[j].size()) return "";        
-            if(x == dictionary[i].size()) continue;
+            if(y == dictionary[j].size()) return "";// return empty string as this is a wrong/invalid dictionary order :: eg: {abca,abc} is wrong/invalid order       
+            if(x == dictionary[i].size()) continue;// {abc,abca} :: this is a valid order but no new relationship can be derieved from this so skip it
             // for 1st different positions in adjacent words we map the relationship
             if(graph[dictionary[i][x]].find(dictionary[j][y]) == graph[dictionary[i][x]].end()){
                 // graph[dictionary[i][x]].push_back(dictionary[j][y]);
@@ -811,6 +813,15 @@ so the best part about graphs is you can try applying each one of them and see i
 So for eg: for Q)Leetcode 269.Alien Dictionary :: we have to order something(=>its an ordering problem)
 So one of the ways we can think of is: it may be Topological Sort(since ordering) if graph problem and try applying it
 */
+
+// Above Solution :: Topo sort using Kahn's Algo (/BFS Topo Sort) 
+
+/*
+Above code is Optimized using following logic:
+Here we capture only the relations between adjacent words only(as the relationship is transitive so those will be automatically captured in the graph itself, 
+So we don’t need to populate the relations between all the words(nC2 relations) rather just adjacent words(n-1 relations) would also work)
+*/
+
 //===================================================================================================
 // Leetcode 743. Network Delay Time :: https://leetcode.com/problems/network-delay-time/ (shortest path- wieghted)
 
@@ -870,7 +881,7 @@ ans=3
 
 //===================================================================================================
 // (premium)Leetcode 1102. Path With Maximum Minimum Value 
-// :: https://www.codingninjas.com/codestudio/problems/path-with-maximum-and-minimum-value_1281861
+// Practice Link:: https://www.codingninjas.com/codestudio/problems/path-with-maximum-and-minimum-value_1281861
 // https://leetcode.ca/all/1102.html
 
 #include <iostream>
@@ -986,8 +997,165 @@ public:
 };
 
 //===================================================================================================
-// Leetcode 1192. Critical Connections in a Network:: https://leetcode.com/problems/critical-connections-in-a-network/
+// (to do)Leetcode 1192. Critical Connections in a Network:: https://leetcode.com/problems/critical-connections-in-a-network/
+// detect bridges : (Tarjan's algo)
+
 
 //===================================================================================================
-//===================================================================================================
+//Leetcode 684. Redundant Connection :: https://leetcode.com/problems/redundant-connection/
+class Solution {
+public:
+    int find_root(int x,vector<int>& parent){
+        //here optimization can be done(path compression)
+        while(x!=parent[x]){
+            x=parent[x];
+        }
+        return x;
+    }
+    vector<int> findRedundantConnection(vector<vector<int>>& edges) {
+        // find the last edge that occurs in the i/p and is a part of the cycle
+        // Can be done by using DSU data stucture, keep adding edges and making the dsu 
+        // until you find the edge that on adding crates a cycle => that edge is the ans
+        int i,n=edges.size();// no of nodes
+        vector<int> parent(n+1,-1);
+        for(i=1;i<=n;i++){
+            parent[i]=i;//initialize each node as parent of itself initially
+        }
+        
+        for(i=0;i<n;i++){
+            int x=edges[i][0];
+            int y=edges[i][1];
+            int root_x = find_root(x,parent);
+            int root_y = find_root(y,parent);
+            if(root_x == root_y){
+                //same root => part of same set => adding this edge creates a cycle
+                return edges[i];
+            }
+            else{
+                //perform union
+                parent[root_x] = root_y ; //here optimization can be done(union by rank)
+            }            
+        }
+        // Non-Functional return - just to avoid compile error
+        return {-1,-1};
+        
+    }
+    
+};
+/*
+Question was on disjoint set data structure
 
+Question boils down to finding the edge(tie-breaker : last in the i/p array) that completes the cycle
+
+Disjoint Set Applications :: we can easily find the:
+- cyclicity in the graph
+    - we can easily find the nodes part of the cycle
+- connectivity : finding no of connected components in a graph 
+- finding MST (since usme bhi cyclicity find krne ka need hota hai efficiently)
+
+*/
+//===================================================================================================
+// Leetocde 1319. Number of Operations to Make Network Connected ::https://leetcode.com/problems/number-of-operations-to-make-network-connected/
+class DisjointSet{
+public:
+    DisjointSet(int n){
+        parent.resize(n);
+        num_components = n;
+        for(int i=0;i<n;i++){
+            parent[i]=i;
+        }
+    }
+    int find_(int x){
+        //finds root of node x
+        while(parent[x]!=x){
+            x=parent[x];
+        }
+        return x;
+    }
+    void union_(int x,int y){
+        // merge 2 trees with diff roots by their roots
+        int root_x = find_(x);
+        int root_y = find_(y);
+        
+        if(root_x == root_y) return;
+        
+        // only if 2 disjoint sets are merged will the num_components decrease 
+        num_components--;//union performed on 2 disjoint sets => 1 component decreases in a union operation
+        parent[root_x] = root_y;// we can do union by rank here 
+    }
+    int getNumComponents(){//getter method to return a private variable
+        return num_components;
+    }
+private:
+    vector<int> parent;
+    int num_components;// stores the number of components in the dsu data structure 
+};
+
+class Solution {
+public:
+    /*
+    Approach 2: using DSU data structure
+        1. find no of extra edges using dsu
+        2. compare extra_edges coutn with needed extra edges (which is = (no of components -1))
+    */
+    int makeConnected(int n, vector<vector<int>>& connections) {
+        DisjointSet ds(n);
+        int i,j,extra_edge = 0;
+        for(i=0;i<connections.size();i++){
+            int r_x = ds.find_(connections[i][0]);
+            int r_y = ds.find_(connections[i][1]);
+            
+            if(r_x == r_y){//implies cycle edge --> extra edge
+                extra_edge++;            
+            }
+            else{
+                ds.union_(connections[i][0],connections[i][1]);                
+            }
+        }
+        int component_count = ds.getNumComponents();//call getter method to count  no of components in dsu data structure
+        if(component_count-1 > extra_edge) return -1;
+        return component_count-1;
+    }
+};
+/*
+// -------------------------------------------------------------------------------------------
+//Approach 1: total edge count & no of edges required & count of connected components
+
+class Solution {
+public:
+    void dfs(int node,vector<int> & visited,vector<vector<int>>& graph){
+        visited[node]=1;
+        
+        for(auto& nbr:graph[node]){
+            if(!visited[nbr]) dfs(nbr,visited,graph);
+        }
+        
+    }
+    int makeConnected(int n, vector<vector<int>>& connections) {
+        int components = 0, n_edges = connections.size() ,i ,j;
+        vector<vector<int>> graph(n);
+        for(auto& x: connections){
+            graph[x[0]].push_back(x[1]);
+            graph[x[1]].push_back(x[0]);
+        }
+        vector<int> visited(n,0);
+        for(i=0;i<n;i++){
+            if(!visited[i]){
+                components++;
+                dfs(i,visited,graph);
+            }
+        }
+        if(n_edges < n-1) return -1;// if total no of nodes is less than n-1 => its not possible to connect n nodes
+        return  components-1; // otherwise its always possible to connect n nodes 
+        // No of connections needed to be rearranged to create a single connected component = no(components) - 1
+    }
+};
+*/
+
+
+
+
+//===================================================================================================
+// Leetcode(premium) 1168. https://leetcode.com/problems/optimize-water-distribution-in-a-village/
+
+//===================================================================================================

@@ -8,7 +8,7 @@
     - decode ways 1   :: https://leetcode.com/problems/decode-ways/
     - decode ways 2   :: 
     - Leetcode 53. Maximum subarray :: https://leetcode.com/problems/maximum-subarray/
-    - Leetcode 152. Maximum Product Subarray :: https://leetcode.com/problems/maximum-product-subarray/
+    - Leetcode 152. Maximum   Subarray :: https://leetcode.com/problems/maximum-product-subarray/
     - Leetcode 978. Longest Turbulent Subarray :: https://leetcode.com/problems/longest-turbulent-subarray/
     - Leetcode 32. Longest Valid Parentheses :: https://leetcode.com/problems/longest-valid-parentheses/
     - 
