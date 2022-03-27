@@ -208,7 +208,7 @@ TUF : NOTES : Graphs Playlist
 - TopoSort DFS (above)
 - TopoSort BFS / Kahn's Algo (above)
 - Cycle Detection in Directed Graph using BFS (using Kahn's Algo)
--
+- Shortest Path in Undirected Graph with Unit Weights (from source to all other nodes)
 -
 -
 -
@@ -422,7 +422,27 @@ bool isCyclic(int n,vector<int> adj[]){
 // this simply reduces to applying kahn's algo & counting the no of nodes for which we can order the graph 
 // using kahn's algo only the members not part of cycle can be part of ordering (since all nodes part of cycle will never acheive indegree=0)
 // ==============================================================================================================
+// Shortest Path in Undirected Graph with Unit Weights (from given source to all other nodes)
 
+vector<int> shortestPath(int n,int src,vector<int>& adj){
+    vector<int> distance(n,INT_MAX);
+    queue<int> q;
+    q.push(src);
+    distance[src]=0;
+
+    while(!q.empty()){
+        int node = q.front();
+        q.pop();
+        for(auto& nbr:adj[node]){
+            if(distance[node]+1 < distance[nbr]){
+                distance[nbr]=distance[node]+1;
+                q.push(nbr);
+            }
+        }
+    }
+
+    return distance;// distance vector from source node to all other nodes 
+}
 // ==============================================================================================================
 
 // ==============================================================================================================

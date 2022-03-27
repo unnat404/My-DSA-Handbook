@@ -1,4 +1,4 @@
-nt main(){
+int main(){
 //     vector<int> graph[5];
 //     graph[0] = {1};
 //     graph[1] = {2};//,{3},{4},{}];

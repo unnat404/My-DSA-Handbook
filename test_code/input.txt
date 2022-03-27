@@ -1,4 +1,1 @@
-3
-2 2 1
-2 2 10
-5 6 3
+Tc S Be Li Er In Dy As I Ac

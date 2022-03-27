@@ -683,6 +683,69 @@ int run() {
 
 */
 //=================================================================================================
+/* D2C question :
+- nandini : codehers
+- unnat : uber hacktag 2.0
+*/
+#include <bits/stdc++.h>
+#define ll long long int
+ 
+ 
+ 
+using namespace std;
+ 
+ 
+ 
+int main()
+{
+ 
+ 
+ 
+    ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+    
+    int t;
+    t=1;
+    // cin>>t;
+    while(t--)
+    {
+        ll n;
+        cin>>n;
+        map<ll,ll>m;
+        vector<ll>a(n);
+        for(int i=0;i<n;i++)
+        {
+            cin>>a[i];
+            m[a[i]]++;
+        }
+        ll q,mt;
+        cin>>q;
+        ll ans=0;
+        while(q--)
+        {
+            cin>>mt;
+            ll ans=0;
+            for(int i=1;i<=sqrt(mt);i++)
+            {
+                if(mt%i==0)
+                {
+                    if((mt/i)!=i)
+                    {
+                        ans+=m[mt/i];
+                        ans+=m[i];
+                    }
+                    else
+                    {
+                        ans+=m[i];
+                    }
+                }
+            }
+            cout<<ans<<'\n';
+        }
+    }
+    
+    return 0;
+ 
+}
 
 //=================================================================================================
 

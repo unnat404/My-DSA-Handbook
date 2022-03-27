@@ -1,4 +1,5 @@
-uto& i:ans){
-        //     for(auto& j: i) cout<<j<<" ";
-        //     cout<<"\n";
-        // }
+n=============\n";
+    // cout<<reactivity("He")<<"\n";
+    // cout<<reactivity("Be")<<"\n";
+    // cout<<reactivity("Au")<<"\n";
+    // cout<<reactivity("L")<<"\n";

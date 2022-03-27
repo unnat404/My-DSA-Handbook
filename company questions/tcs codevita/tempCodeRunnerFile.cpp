@@ -1,0 +1,1 @@
+H O C N Au Ag Cl
