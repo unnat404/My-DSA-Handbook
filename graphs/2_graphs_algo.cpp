@@ -198,6 +198,21 @@ Minimum Spanning Tree :
 */
 // ==============================================================================================================
 /* 
+1)  Cycle Detection in Undirected Graph using BFS
+2)  Cycle Detection in Undirected Graph using DFS
+3)  Bipartite Graph (BFS)
+4)  Bipartite Graph (DFS)
+5)  Cycle Detection in Directed Graph using DFS
+6)  TopoSort DFS (above)
+7)  TopoSort BFS / Kahn's Algo (above)
+8)  Cycle Detection in Directed Graph using BFS (using Kahn's Algo)
+9)  Shortest Path in Undirected Graph with Unit Weights (from source to all other nodes)
+10) 
+11)
+12)
+13)
+14)
+
 TUF : NOTES : Graphs Playlist
 
 - Cycle Detection in Undirected Graph using BFS
@@ -422,10 +437,10 @@ bool isCyclic(int n,vector<int> adj[]){
 // this simply reduces to applying kahn's algo & counting the no of nodes for which we can order the graph 
 // using kahn's algo only the members not part of cycle can be part of ordering (since all nodes part of cycle will never acheive indegree=0)
 // ==============================================================================================================
-// Shortest Path in Undirected Graph with Unit Weights (from given source to all other nodes)
+// 9) Shortest Path in Undirected Graph with *Unit* edge Weights (from given source to all other nodes)
 
-vector<int> shortestPath(int n,int src,vector<int>& adj){
-    vector<int> distance(n,INT_MAX);
+vector<int> shortestPathInUndirected(int n,int src,vector<int>& adj){
+    vector<int> distance(n,INT_MAX);//assign infinity cost to all nodes initially
     queue<int> q;
     q.push(src);
     distance[src]=0;
@@ -444,6 +459,47 @@ vector<int> shortestPath(int n,int src,vector<int>& adj){
     return distance;// distance vector from source node to all other nodes 
 }
 // ==============================================================================================================
+// 10) Shortest Path in Directed Acyclic Graph (DAG)
+/*
+Approach:
+- first find topo sort of DAG(this is imp)
+- traverse(bfs) in topo order and keep updating distance of nodes from source 
+*/
+void findTopoSort(int node, stack<int> &rev_order, vector<int>& vis, vector<pair<int,int>>& adj[]){
+    vis[node]=1;    
+    for(auto& nbr:adj[node]){
+        if(!vis[nbr]) findTopoSort(nbr,rev_order,vis,adj);
+    }
+    rev_order.push(node);//note : we push the node in stack at the last(after all its chilren nodes are visited)
+}
+vector<int> shortestPathInDAG(int src,int n,vector<pair<int,int>> adj[]){
+
+    stack<int> rev_order;
+    for(int i=0;i<n;i++){
+        if(!vis[i]) findTopoSort(i,rev_order,vis,adj);
+        // find toposort for all components: we simply add toposort of different connected components to the same stack
+    }
+
+    vector<int> distance(n);
+    for(i=0;i<n;i++) distance[i]=INT_MAX;
+    distance[src]=0;
+
+    while(!st.empty()){
+        int node= st.top();
+        st.pop();
+
+        if(distance[node]!=INT_MAX){
+            // either src node ,OR, some of its descendents will satisfy above condition
+            for(auto& nbr: adj[node]){
+                if(distance[nbr.first] > distance[node]+nbr.second){
+                    distance[nbr.first] = distance[node]+nbr.second;
+                }
+            }
+        }
+    }
+    return distance;
+}
+
 
 // ==============================================================================================================
 
