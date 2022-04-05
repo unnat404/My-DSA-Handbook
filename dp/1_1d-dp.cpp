@@ -24,6 +24,9 @@
 		○ Longest palindromic substring
         ○ Longest palindromic subsequence
 
+-> https://www.geeksforgeeks.org/top-20-dynamic-programming-interview-questions/?ref=lbp
+-> https://www.geeksforgeeks.org/dynamic-programming-trees-set-1/
+-> https://www.geeksforgeeks.org/dynamic-programming-trees-set-2/
 *****************************************************************************************************/
 // climbing stairs :: https://leetcode.com/problems/climbing-stairs/
 //top down approach

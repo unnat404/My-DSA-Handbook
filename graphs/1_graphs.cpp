@@ -17,7 +17,7 @@ Graphs Problem List:
     - Leetcode 207. Course Schedule :: https://leetcode.com/problems/course-schedule/ (cyclicity for directed)(uber)
     - cyclicity for undirected graphs 
     - Leetcode 210. Course Schedule II :: https://leetcode.com/problems/course-schedule-ii/ (topo sort)(uber)
-    - Leetcode 127. Word Ladder :: https://leetcode.com/problems/word-ladder/ (shaortest path)
+    - Leetcode 127. Word Ladder :: https://leetcode.com/problems/word-ladder/ (shortest path)
     - Leetcode 542. 01 Matrix :: https://leetcode.com/problems/01-matrix/
     - Leetcode  1162. As Far from Land as Possible :: https://leetcode.com/problems/as-far-from-land-as-possible/
     - (to do)Leetcode premium 269:: Alien Dictionary :: https://leetcode.com/problems/alien-dictionary/
@@ -1158,4 +1158,54 @@ public:
 //===================================================================================================
 // Leetcode(premium) 1168. https://leetcode.com/problems/optimize-water-distribution-in-a-village/
 
+
+//===================================================================================================
+//  Leetcode 994. Rotting Oranges:: https://leetcode.com/problems/rotting-oranges/
+class Solution {
+public:
+    int orangesRotting(vector<vector<int>>& grid) {
+        /* 
+        Algo
+        1. count fresh oranges
+        2. store rotten in queue
+        3. level wise traversal - bfs - for each unrotten orange do -1 in total count
+        4. finally if count = 0, return level no, else return -1 
+        */
+        
+        queue<pair<int,int>> q;
+        int fresh=0,i,j,n=grid.size(),m=grid[0].size(),a,b;
+        for(i=0;i<n;i++){
+            for(j=0;j<m;j++){
+                if(grid[i][j]==1) fresh++;
+                else if(grid[i][j]==2) q.push({i,j});
+            }
+        }
+        int dx[4]={-1,1,0,0};
+        int dy[4]={0,0,1,-1};
+        int level = -1 ;
+        while(!q.empty()){
+            int c = q.size();
+            level++;
+            while(c--){
+                int x = q.front().first,y = q.front().second;
+                q.pop();
+                for(i=0;i<4;i++){
+                    a=x+dx[i],b=y+dy[i];
+                    if(a<0 || a>=n || b<0 || b>=m){
+                        continue;
+                    }
+                    if(grid[a][b]==1){
+                        q.push({a,b});fresh--;
+                        grid[a][b]=3;
+                    }
+                }
+            }
+        }
+        if(fresh==0) return max(0,level);// if matrix is empty then ans should be 0 
+        return -1;  
+        
+    }
+};
+
+//  [[0]] ==> 0
 //===================================================================================================
