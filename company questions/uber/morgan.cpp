@@ -65,3 +65,10 @@ int main()
 }
 // ans = 44
 // ==============================================
+//  Question: Find max no of points that lie in a straight line (question was given in story format -- driver delivery netwrok)
+/*
+Solution Approach:
+Step 1: Find frequency of each line (for a pair of points)=> map<pair<pair<int,int>,int>,int> m => m[{{x,y},c}] = {frequency} 
+Step 2: Find the maximum frequency line, by iterating over the values of map, Let this max be 'z'
+Step 3: Find n in the below equation: nC2 = z  (Note: Here, Max no of points on a straight line = n = Answer)
+*/

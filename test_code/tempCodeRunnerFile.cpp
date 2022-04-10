@@ -1,5 +1,4 @@
-n=============\n";
-    // cout<<reactivity("He")<<"\n";
-    // cout<<reactivity("Be")<<"\n";
-    // cout<<reactivity("Au")<<"\n";
-    // cout<<reactivity("L")<<"\n";
+fndef ONLINE_JUDGE
+    freopen("input.txt", "r", stdin);
+    freopen("output.txt", "w", stdout);
+	#endif

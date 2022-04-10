@@ -1169,7 +1169,7 @@ public:
         1. count fresh oranges
         2. store rotten in queue
         3. level wise traversal - bfs - for each unrotten orange do -1 in total count
-        4. finally if count = 0, return level no, else return -1 
+        4. finally if fresh_count = 0, return level no, else return -1 
         */
         
         queue<pair<int,int>> q;

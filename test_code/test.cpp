@@ -1,27 +1,12 @@
+// =============================================================================
+// AAAAAAAAAA
+// AAAAAAAAAA
+// AAAAAAAAAA
+
 #include <iostream>
-#include <algorithm>
 #include <bits/stdc++.h>
 using namespace std;
-int reactivity(string s){
-    int x,y;
-    if(s[0]>='A' && s[0]<='Z'){
-        x = 10 + (s[0]-'A');
-    }
-    else{
-        x = 36 + (s[0]-'a');
-    }
-
-    if((int)s.length()==1) return x;
-
-    if(s[1]>='a' && s[1]<='z'){
-        y = 36 + (s[1]-'a');
-    }else y = 10+ (s[1]-'A');
-
-    int base = max(x+1,y+1);
-    // x = s[1] + s[0]*base;
-    x = y + base * (x);
-    return x;
-}
+#define ll long long 
 
 int main()
 {
@@ -31,45 +16,227 @@ int main()
 	#endif
     // ios_base::sync_with_stdio(false);
     // cin.tie(NULL);
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    
+    int t,n,i,j,sum,cas,x,maxi,flag;
+    string s,ans="",tem;
 
-
-    string s,a,e;
-    vector<string> v;
-    vector<int> r;
-    // cin>>s;
-    getline(cin,s);
-
-    for(auto& c:s){
-        if(c==' '){
-            v.push_back(e);
-            e="";
-        }
-        else e+=c;
-    }
-    if(e!="") v.push_back(e);
-
-    for(auto& x:v){
-        r.push_back(reactivity(x));
-    }
-    int n = (int)v.size();
-    int ans=0;
-
-    // for(auto& i: v){
-    //     cout<<i<<" ";
-    // }cout<<"\n";
-
-    // for(auto& i: r){
-    //     cout<<i<<" ";
-    // }cout<<"\n";
-
-    for(int i=0;i<n;i++){
-        for(int j=i+1;j<n;j++){
-            ans = max(ans,__gcd(r[i],r[j]));
-        }
-    }
-    cout<<ans;
+    cas=0;
+	cin>>t;
+	while(t>0)
+	{
+	    t--;cas++;
+	    cin>>s;
+	    tem="";
+	    n=s.length();
+	    char ch=s[n-1],curr,now;
+	    curr='1';//'1'<'A'
+        // cout<<"curr  s[i]\n";
+	    for(i=n-1;i>=0;){
+	        ch = s[i];
+            
+            // cout<<curr<<" "<<s[i]<<"\n";
+	        while(i>=0 && s[i]<curr && s[i]==ch){
+	            tem+=s[i];//loop over for start element ko double krne vaaste 
+	            tem+=s[i];
+	            i--;
+	        }
+        //     tem+=s[i];
+	       // ch=s[i];
+	       // i--;
+	        
+	        flag=0;
+	        while(i>=0 && s[i]>=ch){//ch ahs to change??
+	            tem+=s[i];
+                ch=s[i];
+	            i--;
+	        }
+	        if(i>=0){
+	           tem+=s[i];
+               tem+=s[i];
+	           curr=s[i];
+	           i--;//new pos
+	        }
+	        while(i>=0 && s[i]==curr){
+	            tem+=curr;tem+=curr;
+	           // curr
+	            i--;//new pos
+	        }
+	    }
+        reverse(tem.begin(),tem.end());
+	    
+	    ans+="Case #"+to_string(cas)+": "+tem+"\n";
+	}
+	ans.erase(ans.length()-1);//removing new line charector from end
+	cout<<ans;
     return 0;
 }
+/*
+
+#include <iostream>
+#include <bits/stdc++.h>
+using namespace std;
+#define ll long long 
+
+int main()
+{
+//     #ifndef ONLINE_JUDGE
+//     freopen("input.txt", "r", stdin);
+//     freopen("output.txt", "w", stdout);
+// 	#endif
+    // ios_base::sync_with_stdio(false);
+    // cin.tie(NULL);
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    
+    int t,n,i,j,sum,cas,x,maxi,flag;
+    string s,ans="",tem;
+
+    cas=0;
+	cin>>t;
+	while(t>0)
+	{
+	    t--;cas++;
+	    cin>>s;
+	    tem="";
+	    n=s.length();
+	    vector<int> dp(n,0);
+	    char ch=s[n-1],curr='1',now;
+	    flag=0;
+	    for(i=n-1;i>=0;i--){
+	        if(flag==1){
+	            i++;flag=0;
+	        }
+	        ch=s[i];
+	        if(curr>s[i]){//for initial cherector
+	            j=i;
+	            while(j>=0 && s[j]==ch){
+	                dp[j]=1;j--;flag==1;
+	            }
+	        }i=j;
+	        curr=ch;
+	    }
+	    
+	    for(i=0;i<n;i++){
+	        if(dp[i]==1){
+	            tem+=s[i];
+	        }
+	        tem+=s[i];
+	    }
+	   // curr='1';//'1'<'A'
+	   // for(i=n-1;i>=0;){
+	   //     ch = s[i];
+	   //     while(i>=0 && s[i]<curr && s[i]==ch){
+	   //         tem+=s[i];
+	   //         tem+=s[i];
+	   //         i--;
+	   //     }
+    //     //     tem+=s[i];
+	   //    // ch=s[i];
+	   //    // i--;
+	        
+	   //     flag=0;
+	   //     while(i>=0 && s[i]>=ch){
+	   //         tem+=s[i];
+	   //         i--;
+	   //     }
+	   //     if(i>=0){
+	   //        tem+=s[i];
+    //           tem+=s[i];
+	   //        curr=s[i];
+	   //        i--;//new pos
+	   //     }
+	   //     while(i>=0 && s[i]==curr){
+	   //         tem+=curr;tem+=curr;
+	   //        // curr
+	   //         i--;//new pos
+	   //     }
+	   // }
+        // reverse(tem.begin(),tem.end());
+	    
+	    ans+="Case #"+to_string(cas)+": "+tem+"\n";
+	}
+// 	ans.erase(ans.length()-1);//removing new line charector from end
+	cout<<ans;
+    return 0;
+}
+
+
+*/
+// =======================================================================================
+// #include <iostream>
+// #include <algorithm>
+// #include <bits/stdc++.h>
+// using namespace std;
+// int reactivity(string s){
+//     int x,y;
+//     if(s[0]>='A' && s[0]<='Z'){
+//         x = 10 + (s[0]-'A');
+//     }
+//     else{
+//         x = 36 + (s[0]-'a');
+//     }
+
+//     if((int)s.length()==1) return x;
+
+//     if(s[1]>='a' && s[1]<='z'){
+//         y = 36 + (s[1]-'a');
+//     }else y = 10+ (s[1]-'A');
+
+//     int base = max(x+1,y+1);
+//     // x = s[1] + s[0]*base;
+//     x = y + base * (x);
+//     return x;
+// }
+
+// int main()
+// {
+//     #ifndef ONLINE_JUDGE
+//     freopen("input.txt", "r", stdin);
+//     freopen("output.txt", "w", stdout);
+// 	#endif
+//     // ios_base::sync_with_stdio(false);
+//     // cin.tie(NULL);
+
+
+//     string s,a,e;
+//     vector<string> v;
+//     vector<int> r;
+//     // cin>>s;
+//     getline(cin,s);
+
+//     for(auto& c:s){
+//         if(c==' '){
+//             v.push_back(e);
+//             e="";
+//         }
+//         else e+=c;
+//     }
+//     if(e!="") v.push_back(e);
+
+//     for(auto& x:v){
+//         r.push_back(reactivity(x));
+//     }
+//     int n = (int)v.size();
+//     int ans=0;
+
+//     // for(auto& i: v){
+//     //     cout<<i<<" ";
+//     // }cout<<"\n";
+
+//     // for(auto& i: r){
+//     //     cout<<i<<" ";
+//     // }cout<<"\n";
+
+//     for(int i=0;i<n;i++){
+//         for(int j=i+1;j<n;j++){
+//             ans = max(ans,__gcd(r[i],r[j]));
+//         }
+//     }
+//     cout<<ans;
+//     return 0;
+// }
 // H O C N Au Ag Cl : 12
 //  Tc S Be Li Er In Dy As I Ac : 7
 
