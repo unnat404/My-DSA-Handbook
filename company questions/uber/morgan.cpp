@@ -71,4 +71,14 @@ Solution Approach:
 Step 1: Find frequency of each line (for a pair of points)=> map<pair<pair<int,int>,int>,int> m => m[{{x,y},c}] = {frequency} 
 Step 2: Find the maximum frequency line, by iterating over the values of map, Let this max be 'z'
 Step 3: Find n in the below equation: nC2 = z  (Note: Here, Max no of points on a straight line = n = Answer)
+
+
+Note: 
+- To store a line we need 2 things :{ slope & y-intercept}
+- We can store slope in 2-ways:
+    - as a pair (more accurate): {dx,dy}
+    - as a decimal (less accurate as decimal constraints): dy/dx
+- Line can be represented using 3 variables: {dx,dy,c} 
+
+Therefore to store number of pairs on a given line we can store the frequency of  {dx,dy,c} in a map
 */
