@@ -6,8 +6,9 @@
 4   - Leetcode 443. String Compression :: https://leetcode.com/problems/string-compression/
 5   - Leetcode 67. Add Binary :: https://leetcode.com/problems/add-binary/
 6   - Leetcode 28. 
-7   - Leetcode 
-8   - Leetcode 
+7   - Leetcode 678. Valid Parenthesis String :: https://leetcode.com/problems/valid-parenthesis-string/
+8   - Leetcode 296. Best Meeting Point
+        - https://leetcode.ca/all/296.html#:~:text=A%20group%20of%20two%20or,%2C%20p2)%20%3D%20%7Cp2.
 9   - Leetcode 
 10  - Leetcode
 11  - Leetcode
@@ -170,3 +171,104 @@ public:
         return ans;
     }
 };
+
+// ==================================================================================================
+// Question 7
+// Leetcode 678. Valid Parenthesis String :: https://leetcode.com/problems/valid-parenthesis-string/
+class Solution {
+public:
+    bool checkValidString(string s) {
+        stack<int> star,open;
+        int i,j,n=s.length();
+        for(i=0;i<n;i++){
+            if(s[i]=='(') open.push(i);
+            
+            else if(s[i]==')'){
+                if(!open.empty()) open.pop();
+                else if(!star.empty()) star.pop();
+                else return false;// no '(' or '*' present to balance ')'
+            }
+            
+            else if(s[i]=='*'){
+                star.push(i);    
+            }
+        }
+        // after above loop ')' is balanced, now we need to balance '(' if any by '*'
+        
+        while(!open.empty()){
+            if(star.empty()) return false;// no * to balance (
+                        
+            // good => (*  || bad => *( 
+            if(open.top()>star.top()) return false;
+            else{
+                open.pop();
+                star.pop();
+            }
+        } 
+        return true;
+    }    
+};
+// ==================================================================================================
+/*
+Leetcode 296. Best Meeting Point
+        - https://leetcode.ca/all/296.html#:~:text=A%20group%20of%20two%20or,%2C%20p2)%20%3D%20%7Cp2.
+        - https://www.codingninjas.com/codestudio/problems/best-meeting-point_1463982
+
+*/
+int findBestMeetingPoint(vector<vector<int>> &mat)
+{
+	int meet,t,dist=0,n=mat.size(),m=mat[0].size(),i,j,xmedian,ymedian;
+	vector<int> row,col;//find median of x & y coordinates seperately 
+	// row is projetcion of x-co-ordinates of 1's
+	
+	//row wise traversal ensures sorted x-coordinates
+	for(i=0;i<n;i++){
+		for(j=0;j<m;j++){
+			if(mat[i][j]==1) col.push_back(i);
+		}		
+
+	}
+	//col wise traversal ensures sorted y-coordinates
+	for(j=0;j<m;j++){
+		for(i=0;i<n;i++){
+			if(mat[i][j]==1) row.push_back(j);
+		}
+	}
+	
+	xmedian = col[col.size()/2];
+	ymedian = row[row.size()/2];
+	for(auto x :col) dist+=abs(xmedian-x);
+	for(auto y :row) dist+=abs(ymedian-y);
+	return dist;
+}
+/*
+// 		find median of position
+// 		meet = v[v.size()/2];// 5/2=2
+// 		for(auto x:v) dist+=abs(meet-x);
+// 		return dist;
+*/
+// ==================================================================================================
+// Interviewbit ::  Merge Intervals :: https://www.interviewbit.com/problems/merge-intervals/
+/**
+ * Definition for an interval.
+ * struct Interval {
+ *     int start;
+ *     int end;
+ *     Interval() : start(0), end(0) {}
+ *     Interval(int s, int e) : start(s), end(e) {}
+ * };
+ */
+vector<Interval> Solution::insert(vector<Interval> &intervals, Interval newInterval) { 
+    vector<Interval> res;
+    for (Interval test : intervals) {
+        if (newInterval.start > test.end) res.push_back(test);
+        else if(test.start > newInterval.end) {
+            res.push_back(newInterval);
+            newInterval = test;
+        } else if (newInterval.start <= test.end || newInterval.end >= test.start) {
+            newInterval = Interval(min(test.start, newInterval.start), max(test.end, newInterval.end));
+        }
+    } 
+    res.push_back(newInterval);
+    return res;
+}
