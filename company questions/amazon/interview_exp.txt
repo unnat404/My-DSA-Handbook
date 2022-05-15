@@ -1,0 +1,15 @@
+Amazon
+- https://medium.com/@arbs/my-amazon-internship-interview-experience-7d3d54f6ae30
+- Leadership Qns: https://leetcode.com/discuss/study-guide/2004928/amazon-lp-questions
+
+
+google
+- https://salonix.medium.com/my-google-swe-intern-2022-experience-98a6ce99ebf0
+
+
+
+Resources that were very useful for me:
+- DSA cracker sheet : Luv  Babbar
+- Striver’s SDE sheet
+- Pramp : for mock interviews
+- IndiaBIX
