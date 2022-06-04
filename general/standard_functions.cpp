@@ -147,3 +147,14 @@ int main()
 	return 0;
 }
 // ================================================================================================
+// Binomial Coeffiecients:  https://cp-algorithms.com/combinatorics/binomial-coefficients.html
+// Finding nCk = C(n,k) = n!/(k! * (n-k)!)
+int C(int n, int k) {
+    double res = 1;
+    for (int i = 1; i <= k; ++i)
+        res = res * (n - k + i) / i;
+    return (int)(res + 0.01);
+}
+// ================================================================================================
+// Bit Manipulation Hacks: http://graphics.stanford.edu/~seander/bithacks.html
+// ================================================================================================
