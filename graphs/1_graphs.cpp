@@ -71,7 +71,7 @@ public:
     }
     void dfs(vector<vector<char>> &grid,int x,int y){
         int n=grid.size(),m=grid[0].size(),a,b;
-        grid[x][y]='2';
+        grid[x][y]='2';//mark as visited
         int dx[4]={-1,1,0,0};//left,right,down,up
         int dy[4]={0,0,-1,1};
         for(int i=0;i<4;i++){
@@ -136,7 +136,7 @@ public:
 // Q) another variation of above qn: finding size of largest perimeter of connected components
 // Sol) same as above , we only increase the "size" of a component if current element lies on the perimeter of a component
 // component perimeter check: 
-// - if (i,j) node has one adjacent 0 to it,or,
+// - if (i,j) node has one adjacent 0 to it, and/or,
 // - if (i,j) lies on the border of the matrix  
 
 //===================================================================================================
@@ -224,13 +224,15 @@ public:
 // Question boils down to finding no of connected components (easy peasy)
 //===================================================================================================
 
-// Leetcode 990. Satisfiability of Equality Equations :: https://leetcode.com/problems/satisfiability-of-equality-equations/
+// **Leetcode 990. Satisfiability of Equality Equations :: https://leetcode.com/problems/satisfiability-of-equality-equations/
 // company :: facebook
+// NOTE: this is an extremely good question for testing use case analysis by interviewee
+
 
 // sir ka code
 
 
-// -------------TO DO--------
+// ------------- TO DO --------
 
 // my code :: incorrect hai niche wla  (error aa rha hai check it why)
 class Solution {
@@ -289,6 +291,58 @@ public:
         
     }
 };
+// -----------------------------------------------------------------
+// working code (khud ka) (checkout sir's code also)
+// -----------------------------------------------------------------
+
+class Solution {
+public:
+    int findRoot(vector<int> &roots,int node){
+        if(roots[node]==-1) return -1;
+        while(roots[node]!=node) node = roots[node];
+        return node;
+    }
+    bool equationsPossible(vector<string>& equations) {
+        vector<int> roots(26,-1);// unvisited
+        int ca,cb,ra,rb;
+        for(auto s:equations){
+            ca = s[0]-'a', cb = s[3]-'a';
+            ra = findRoot(roots,ca) , rb = findRoot(roots,cb);
+            if(s[1]== '='){
+                // if (neither is visited || only one of them is visited)
+                if(ra==rb && ra==-1){
+                    roots[ca]=roots[cb]=ca;
+                }               
+                else if(ra==-1 || rb==-1) roots[ca]=roots[cb] = max(ra,rb);
+                // if both of them is visited
+                else{
+                    if(rb>ra) roots[ra] = rb;
+                    else roots[rb]=ra;               
+                }
+            }
+        }
+        
+        for(auto s:equations){
+            if(s[1]=='!'){
+                ca = s[0]-'a', cb = s[3]-'a';
+                ra = findRoot(roots,ca) , rb = findRoot(roots,cb);
+                if(ca==cb) return false;
+                if(ca!=cb && ra==rb && ra!=-1) return false;
+            }
+        }
+        return true;
+    }
+};
+/*
+- make graph using ==
+- check 2 char with != condition should not exist
+
+["a==b","b!=a"]
+["b==a","a==b"]
+["b!=f","c!=e","f==f","d==f","b==f","a==f"]
+["a==b","b!=c","c==a"]
+["c==c","b==d","x!=z"]
+*/
 
 //===================================================================================================
 // Leetcode 130. Surrounded Regions :: https://leetcode.com/problems/surrounded-regions/
