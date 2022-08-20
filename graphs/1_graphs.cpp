@@ -55,6 +55,24 @@ Leetcode Premium Problem resources:
     - lintcode
     
 --------------------
+Resources for Graph:
+- demux
+- copy notes (dsa)
+- striver graph playlist
+- 
+
+Topics yet to cover and revise:
+- watch lectures(make notes)
+- floyd warshall (apsp)
+- disjoint set data structure
+- mst: prims, kruskal's
+- tarjan's algo (bridges)
+- make crisp video of all questions + theory : 
+    - graphs in one vid 
+    - complete revision 
+    - time and space complexities of algo's
+    - questions and solution walkthroughs 
+--------------------
 
 *****************************************************************************************************/
 
@@ -103,6 +121,19 @@ public:
         if(x<0 || x>=n || y<0 || y>=m) return false;
         return true;
     }
+    bool isOnBoundary(int x,int y,int n,int m,vector<vector<int>>& grid){
+        // on grid edge
+        if(x==0 || y==0 || x==n-1 || y==m-1) return true;
+        // any one side connected to water 
+        int dx[4]={-1,1,0,0};
+        int dy[4]={0,0,-1,1};
+        int a,b;
+        for(int k=0;k<4;k++){
+            a=x+dx[k],b=y+dy[k];
+            if(inside(a,b) && grid[a][b]==0) return true;
+        }
+        return false;
+    }
     void dfs(vector<vector<int>> &grid,int x,int y,int &size){
         grid[x][y]=2;//marking visited
         ++size; // finding size of current connected component
@@ -138,7 +169,6 @@ public:
 // component perimeter check: 
 // - if (i,j) node has one adjacent 0 to it, and/or,
 // - if (i,j) lies on the border of the matrix  
-
 //===================================================================================================
 // -------------IMP Question-------------
 // Leetcode 133. Clone Graph :: https://leetcode.com/problems/clone-graph/
@@ -443,8 +473,8 @@ public:
     }
 };
 //===================================================================================================
-// Leetcode 694. Number of Distinct Islands (premium):: https://binarysearch.com/problems/Distinct-Islands
-
+// **Leetcode 694. Number of Distinct Islands (premium)(practice):: https://binarysearch.com/problems/Distinct-Islands
+// qn : https://leetcode.ca/all/694.html
 int dx[4]={0,1,0,-1};
 int dy[4]={1,0,-1,0};
 char dir[4]={'R','D','L','U'};// is this direction of visiting imp?? maybe?? i dont think so
@@ -499,6 +529,11 @@ d r # #
  
 # represents the backtracking step (needed to distinguish between different islands)
 
+. 1 .
+1 1 .
+. 1 1
+
+d d d r # # l #
 */
 //===================================================================================================
 // Leetcode 207. Course Schedule :: https://leetcode.com/problems/course-schedule/
@@ -569,8 +604,6 @@ bool canFinish(int n, vector<pair<int, int>>& pre) {
     return n == 0;
 }
 
-*/
-/*
 ------------
 input:
 ------------
@@ -593,9 +626,10 @@ true
 false
 true
 */
-// Qn boils down to findig cyclicity in a directed graph
+// Qn boils down to findig cyclicity in a directed graph (check 2_graphs_algo.cpp for its algo)
+
 //===================================================================================================
-// Leetcode 210. Course Schedule II :: https://leetcode.com/problems/course-schedule-ii/
+// **Leetcode 210. Course Schedule II :: https://leetcode.com/problems/course-schedule-ii/
 // tags : uber, topo sort
 // #include <bits/stdc++.h>
 class Solution {
@@ -731,7 +765,7 @@ public:
 
 // pblm boils down to finding shortest path
 // but we do parallel bfs for multiple nodes at same time (following level order traversal)
-
+// Qn boils down to : maintain level(for shortest path) while doing multi-source bfs
 //===================================================================================================
 // Leetcode  1162. As Far from Land as Possible :: https://leetcode.com/problems/as-far-from-land-as-possible/
 class Solution {
@@ -780,6 +814,7 @@ public:
 
 //===================================================================================================
 // Leetcode premium 269:: https://leetcode.com/problems/alien-dictionary/
+// Leetcode.ca/all : https://leetcode.ca/all/269.html
 // Lintcode :: https://www.lintcode.com/problem/892/
 // Practice Link 1:https://www.codingninjas.com/codestudio/problems/alien-dictionary_630423
 // *Practice Link 2: https://practice.geeksforgeeks.org/problems/alien-dictionary/1/#

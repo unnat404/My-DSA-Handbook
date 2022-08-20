@@ -17,7 +17,7 @@ Reference:
 using namespace std; 
 // ==============================================================================================================
 // Topological Sort : dfs
-// input : ensure that the graph input is DAG  (/if you are constructing grah yourself ensure its a DAG)
+// input : ensure that the graph input is DAG  (/if you are constructing graph yourself ensure its a DAG)
 // output: one of the possible topological order
 void findTopoSortDFS(int node,vector<int>& visited, stack<int>& rev_order, vector<int> graph[]){
     visited[node] = 1;
@@ -68,6 +68,7 @@ vector<int> topoSortBFS(int N, vector<int> graph[]){
     // otherwise for char/any general nodes we will have to usee different data structures 
     // like: graph :: unordered_map<char,unordered_set<char>> graph;
     // indegree :: inordred_map<char,int> indegree;
+    // edges : a->b iff a is a pre-requisite of b (THIS DIRN OF EDGE IS IMP)
 
     vector<int> indegree(N,0);
     vector<int> order;// store the topo ordering of nodes
@@ -233,7 +234,7 @@ TUF : NOTES : Graphs Playlist
 */
 
 // ==============================================================================================================
-// Cycle Detection in Undirected Graph using BFS
+// 1) Cycle Detection in Undirected Graph using BFS
 bool checkForCycle(int s,int V,vector<int> adj[],vector<int>& visited){
     // Creat Queue for BFS
     queue<pair<int,int>> q;//{node,parent} :: need for parent why?(think)
@@ -275,7 +276,7 @@ bool isCycle(int V,vector<int> adj[]){ // main function
     - use visited array itself to store parent 
 */
 // ==============================================================================================================
-// Cycle Detection in Undirected Graph using DFS
+// 2) Cycle Detection in Undirected Graph using DFS
 bool checkForCycle(int node,int parent,vector<int>& visited,vector<int> adj[]){
     visited[node] = 1;
 
@@ -299,7 +300,7 @@ bool isCycle(int V,vector<int>& adj[]){ // main function
     return false;
 }
 // ==============================================================================================================
-// Bipartite Graph (BFS) | Graph Coloring
+// 3) Bipartite Graph (BFS) | Graph Coloring
 // bipartite => can we color the graph using just 2 colors such that no 2 adjacent vertices have the same color
 bool colorBipartiteBFS(int node, vector<int> &visited,vector<int> adj[]){
     queue<int> q;
@@ -331,7 +332,7 @@ bool checkBipartite(vector<int>& adj[], int n){
 
 }
 // ==============================================================================================================
-// Bipartite Graph (DFS) | Graph Coloring
+// 4) Bipartite Graph (DFS) | Graph Coloring
 
 bool colorBipartiteDFS(int node,int parent_color, vector<int>& visited,vector<int> adj[]){
     int color = visited[node];//
@@ -363,7 +364,10 @@ bool checkBipartite(vector<int>& adj[], int n){
 
 }
 // ==============================================================================================================
-// Cycle Detection in Directed Graph using DFS
+// 5) Cycle Detection in Directed Graph using DFS
+//----------------------------
+// implementation #1:(more general)
+//----------------------------
 bool checkCycleDFS(int node,int vis[],int curr_path[],vector<int> adj[]){
     vis[node]=1;
     curr_path[node]=1;
@@ -391,15 +395,63 @@ bool isCyclic(int N,vector<int> adj[]){
     }
     return false;
 }
+//----------------------------
+// implementation #2
+//----------------------------
+class Solution {
+public:    
+    bool checkCycle(int node,vector<int> &vis,vector<vector<int>> &adj){
+        if(vis[node]==2) return true;// visiting "node" again in its processing mode  => cycle present      
+        vis[node]=2;// processing "node" 
+        bool cycle=false;
+        for(auto x:adj[node]){
+            if(vis[x]!=1){
+                if(checkCycle(x,vis,adj)) return true;
+            }            
+        }
+        vis[node]=1;// processed already
+        return false;
+    }
+    
+    bool canFinish(int numCourses, vector<vector<int>>& prerequisites) {
+        int n=numCourses,i,j;
+        vector<vector<int>> adj(n);
+        vector<int> vis(n,0);//unvis
+        bool cycle = false;
+        
+        //build graph
+        for(auto pre:prerequisites){
+            adj[pre[0]].push_back(pre[1]);
+        }
+        
+        for(i=0;i<n;i++){
+            if(vis[i]==0){
+                //unvisited
+                cycle = checkCycle(i,vis,adj);
+                if(cycle) return false;
+            }
+        }
+        return true;
+    }
+};
+/*
+---------------------------------
+vis[i] : {0,1,2} : 3 states of each node
+0-> unvisited
+1-> visited & processing done
+2-> processing (/in current_path)
 
+if you visit a node again if its in processing state(/in current path) => cycle exists
+---------------------------------
+*/
 // ==============================================================================================================
-// Topological Sort (DFS)
+// 6) Topological Sort (DFS)
 // Check code above at top of page
 // ==============================================================================================================
-// Topological Sort (BFS) / Kahn's Algo
+// 7) Topological Sort (BFS) / Kahn's Algo
 // Check code above at top of page
 // ==============================================================================================================
-// Cycle Detection in Directed Graph using BFS (using Kahn's Algo)
+// 8) Cycle Detection in Directed Graph using BFS (using Kahn's Algo)
 
 bool isCyclic(int n,vector<int> adj[]){
     queue<int> q;
