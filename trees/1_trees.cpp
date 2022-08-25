@@ -1,6 +1,6 @@
 /***************************************************************************************************
-Linked List Problem List:
-
+Trees Problem List:
+(check out OneNote -> striver's tree series : lecture notes 30/54 lectures done)
  -> --- : 
     - Leetcode 
     - Leetcode 
