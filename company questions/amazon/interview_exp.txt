@@ -2,6 +2,13 @@ Amazon
 - https://medium.com/@arbs/my-amazon-internship-interview-experience-7d3d54f6ae30
 - Leadership Qns: https://leetcode.com/discuss/study-guide/2004928/amazon-lp-questions
 
+- https://leetcode.com/discuss/interview-question/1991844/AMAZON-or-OA-or-SDE1-or-2022
+- OA 2022 : https://leetcode.com/discuss/interview-question/2464743/amazon-oa-2022
+- gfg amazon job-a-thon 's 
+    - striver's soln on utube also available for those videos 
+- amazon wow's questions (n.a.)
+- telegram groups
+
 
 google
 - https://salonix.medium.com/my-google-swe-intern-2022-experience-98a6ce99ebf0
@@ -13,3 +20,4 @@ Resources that were very useful for me:
 - Striver’s SDE sheet
 - Pramp : for mock interviews
 - IndiaBIX
+

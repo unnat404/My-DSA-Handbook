@@ -27,7 +27,10 @@
 -> to do:
     - https://leetcode.com/problems/count-substrings-that-differ-by-one-character/
 
-    
+    - Leetcode 132. Palindrome Partitioning II : https://leetcode.com/problems/palindrome-partitioning-ii/
+    - Leetcode 131. Palindrome Partitioning : https://leetcode.com/problems/palindrome-partitioning/
+    - Leetcode 1745. Palindrome Partitioning IV : https://leetcode.com/problems/palindrome-partitioning-iv/
+
 -> https://www.geeksforgeeks.org/top-20-dynamic-programming-interview-questions/?ref=lbp
 -> https://www.geeksforgeeks.org/dynamic-programming-trees-set-1/
 -> https://www.geeksforgeeks.org/dynamic-programming-trees-set-2/

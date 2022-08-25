@@ -1,7 +1,12 @@
 // HAckerEarth SDe Hiring challenge
 /*
 - https://leetcode.com/discuss/interview-question/1991844/AMAZON-or-OA-or-SDE1-or-2022
-
+- gfg amazon job-a-thon 's 
+    - striver's soln on utube also available for those videos 
+- OA 2022 : https://leetcode.com/discuss/interview-question/2464743/amazon-oa-2022
+- Last 1 year OA qns : https://leetcode.com/discuss/interview-question/1590162/amazon-final-interview-questions-all-combined-2021-sde-new-grad
+- most freq asked amazon qns oa + interview : https://github.com/KushalVijay/AmazonCrackedResource/blob/main/CrackAmazonResource.md
+- 
 
 Minimize Difference
 

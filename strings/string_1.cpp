@@ -21,6 +21,30 @@
 18  - Leetcode
 19  - Leetcode
 20  - Leetcode
+
+TODO: 
+- Leetcode 1328. Break a Palindrome : https://leetcode.com/problems/break-a-palindrome/
+    - https://www.youtube.com/watch?v=iXbJ1qvKg28
+- Leetcode 132. Palindrome Partitioning II : https://leetcode.com/problems/palindrome-partitioning-ii/
+- Leetcode 131. Palindrome Partitioning : https://leetcode.com/problems/palindrome-partitioning/
+    - https://www.geeksforgeeks.org/palindrome-partitioning-dp-17/
+- Leetcode 1745. Palindrome Partitioning IV : https://leetcode.com/problems/palindrome-partitioning-iv/
+- Leetcode  : https://leetcode.com/problems/repeated-string-match/
+- Leetcode  : https://leetcode.com/problems/maximum-repeating-substring/
+- Leetcode  : https://leetcode.com/problems/repeated-substring-pattern/
+- 
+- https://www.geeksforgeeks.org/kmp-algorithm-for-pattern-searching/
+- kmpc : cp algorithms
+- kmp/periodic strings : https://www.spoj.com/problems/FINDSR/
+- kmp/manchester algo (google kickstart E 2022) : https://codingcompetitions.withgoogle.com/kickstart/round/00000000008cb0f5/0000000000ba82c5
+    - machenster soln (TODO) : 
+    - kanisht' soln (kmp)(better): http://p.ip.fi/sE7c
+    - mine (optimized brute force) : https://p.ip.fi/VqvE
+- 
+
+Additional String tagged pblms:
+- https://www.interviewbit.com/courses/programming/strings/
+- bits sheet
 */
 
 

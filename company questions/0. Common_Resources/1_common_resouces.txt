@@ -1,0 +1,54 @@
+----------------------------------
+Company questions places/sites
+----------------------------------
+- https://workat.tech/problem-solving/practice/companies
+- binary search
+- leetcode discuss(filter by "company name" and "newest to oldest")
+- gfg interview experiences 
+- **DesiQnA(latest OA qns/company wise) : 
+    - company-wise : https://www.desiqna.in/company-wise-questions
+    - tcs nqt - https://www.desiqna.in/tag/tcs_nqt
+
+----------------------------------
+DSA Lists
+----------------------------------
+- striver's sde sheet
+- bits goa 
+- self notes (copy + github)
+- arsh goyal (most recent qns asked in companies)
+
+
+----------------------------------
+Leadership Principles
+----------------------------------
+- amazon's folder/directory check
+- 
+- 
+- 
+
+
+----------------------------------
+DBMS/SQL
+----------------------------------
+- hackerank 80 qns
+-  
+- 
+- 
+
+
+----------------------------------
+HLD/LLD?Design Priciples
+----------------------------------
+- https://workat.tech/machine-coding 
+- sudocode - youtube
+-  
+- 
+
+
+----------------------------------
+Questions to ask in/after Interview
+----------------------------------
+- https://leetcode.com/discuss/career/2469217/List-of-questions-to-ask-in-an-interview!!
+- 
+- 
+- 

@@ -1,0 +1,2 @@
+Resources/templates :
+- email template for negotiation : https://faangpath.com/blog/how-to-negotiate-salary/
