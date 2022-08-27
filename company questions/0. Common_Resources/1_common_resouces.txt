@@ -5,8 +5,9 @@ Company questions places/sites
 - binary search
 - leetcode discuss(filter by "company name" and "newest to oldest")
 - gfg interview experiences 
-- **DesiQnA(latest OA qns/company wise) : 
+- **DesiQnA(latest OA qns/company wise) : https://www.desiqna.in/online-assessments
     - company-wise : https://www.desiqna.in/company-wise-questions
+    - oa's : https://www.desiqna.in/online-assessments
     - tcs nqt - https://www.desiqna.in/tag/tcs_nqt
 
 ----------------------------------

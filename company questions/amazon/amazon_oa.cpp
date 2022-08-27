@@ -6,7 +6,11 @@
 - OA 2022 : https://leetcode.com/discuss/interview-question/2464743/amazon-oa-2022
 - Last 1 year OA qns : https://leetcode.com/discuss/interview-question/1590162/amazon-final-interview-questions-all-combined-2021-sde-new-grad
 - most freq asked amazon qns oa + interview : https://github.com/KushalVijay/AmazonCrackedResource/blob/main/CrackAmazonResource.md
-- 
+- OA Aug 2022 : https://leetcode.com/discuss/interview-question/2483348/Amazon-OA-question-oror-August-2022-oror-important
+    -  https://leetcode.com/problems/maximum-performance-of-a-team/
+- OA Aug 2022 : https://leetcode.com/discuss/interview-question/2488486/Amazon-OA-assessment-Try-solving-second-one-first-one-was-easy
+- OA Aug 2022 : https://leetcode.com/discuss/interview-question/2488373/OA-question
+- https://leetcode.com/discuss/interview-question/2474457/Amazon-SDE-Intern-or-OA-and-Interview-or-Offer
 
 Minimize Difference
 
