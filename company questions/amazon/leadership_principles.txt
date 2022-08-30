@@ -7,58 +7,105 @@
 2.https://www.youtube.com/channel/UCw0uQHve23oMWgQcTTpgQsQ/playlists
 3.https://medium.com/@scarletinked/are-you-the-leader-were-looking-for-interviewing-at-amazon-8301d787815d
 
+--------------------------------------------------------------------------------------------------------------------------------------
 Tell me about a situation where you had a conflict with someone on your team. What was it about? What did you do? How did they react? What was the outcome?
 
+--------------------------------------------------------------------------------------------------------------------------------------
 Give an example of when you saw a peer struggling and decided to step in and help. What was the situation and what actions did you take? What was the outcome?
-Tell me about a time you committed a mistake?
 
+--------------------------------------------------------------------------------------------------------------------------------------
+Tell me about a time you committed a mistake?
+- django db migration fuckup in dev env on putty : 
+- understood the importance of having dev env setup to prevent prod from going down & doing local testing
+- rahul (team lead was away on trip, so i was basically incharge of backend and deploying solns)
+--------------------------------------------------------------------------------------------------------------------------------------
 Tell me about a time when your earned your teammate's trust?
 
+--------------------------------------------------------------------------------------------------------------------------------------
 Tell me about a time when you couldn't meet your deadline?
 
+--------------------------------------------------------------------------------------------------------------------------------------
 Tell me about a time when your teammate didn't agree with you? What did you do?
 
-Tell me about a time when you invented something?
+--------------------------------------------------------------------------------------------------------------------------------------
+Q) Tell me about a time when you invented something?
+Ans)
+- make our own sun but varying highly strong magnetic fields
+- spherical wheel (instead of conventional circular wheel) 
+    => 360 degree movement of vehicles (unveiled later at a lamborgini car showcase event)
+    => think of parallel parking made super easy
+    => diagonal movement of ambulances in traffic while maintaining stability (since little to no centrifugal forces on patient)
+  
+- 
 
+--------------------------------------------------------------------------------------------------------------------------------------
 Tell me about a time when you took important decision without any data?
 
+--------------------------------------------------------------------------------------------------------------------------------------
 Tell me about a time when you helped one of your teammates?
 
+--------------------------------------------------------------------------------------------------------------------------------------
 Have you ever been in a situation where you had to make a choice among a few options, but did not have a lot of time to explore each option
 
+--------------------------------------------------------------------------------------------------------------------------------------
 Have you ever failed at something? What did you learn from it?
 
+--------------------------------------------------------------------------------------------------------------------------------------
 name time when you went out of your way to help someone?
 
+--------------------------------------------------------------------------------------------------------------------------------------
 Time when you came up with novel solution.
+
+--------------------------------------------------------------------------------------------------------------------------------------
 Received negative feedback from manager and how you responded.
+--------------------------------------------------------------------------------------------------------------------------------------
 Time when you went above and beyond your job responsibilities.
+--------------------------------------------------------------------------------------------------------------------------------------
 Time when you did not have enough data and had to use judgement to make decision.
+--------------------------------------------------------------------------------------------------------------------------------------
 Time when you helped someone in their work.
+--------------------------------------------------------------------------------------------------------------------------------------
 Time when you helped someone grow in career and it benefited them.
+--------------------------------------------------------------------------------------------------------------------------------------
 Time when you helped someone grow but did not benefit them.
+--------------------------------------------------------------------------------------------------------------------------------------
 Time when you were 75% through a project and realized you had the wrong goal.
+--------------------------------------------------------------------------------------------------------------------------------------
 Time when your team members were not supporting something but you pushed and went for a more optimal solution.
+--------------------------------------------------------------------------------------------------------------------------------------
 Time when you pushed back a decision from your management for better long term benefits.
+--------------------------------------------------------------------------------------------------------------------------------------
 Time when you failed to meet your commitment
+--------------------------------------------------------------------------------------------------------------------------------------
 
 Tell me about yourself. Tell me about a project you're working on.
+--------------------------------------------------------------------------------------------------------------------------------------
 
 Time when you were working on a project on a time constraint
+--------------------------------------------------------------------------------------------------------------------------------------
 
 Time when you didn't meet a deadline
+--------------------------------------------------------------------------------------------------------------------------------------
 
 Time when you needed help from somebody
+--------------------------------------------------------------------------------------------------------------------------------------
 
 Tell me about yourself.
+--------------------------------------------------------------------------------------------------------------------------------------
 Tell me about a time you had to help a team member struggling with a task.
+--------------------------------------------------------------------------------------------------------------------------------------
 Tell me about a time you faced an obstacle and how you overcame it.
+--------------------------------------------------------------------------------------------------------------------------------------
 
 Tell me about one of your projects?
+--------------------------------------------------------------------------------------------------------------------------------------
 Tell me about one of your projects so the same as the first guy.
+--------------------------------------------------------------------------------------------------------------------------------------
 Tell me a time you took some on some risk
 
+--------------------------------------------------------------------------------------------------------------------------------------
 Have you ever gone out of your way to help a peer? (ownership)
+--------------------------------------------------------------------------------------------------------------------------------------
 Have you ever had to make a tough decision without consulting anybody? (bias for action)
 asked me about my past projects that I've worked on and gave me detailed explaination about the Internship.
 
