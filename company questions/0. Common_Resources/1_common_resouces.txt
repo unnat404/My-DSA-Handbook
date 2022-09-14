@@ -2,6 +2,7 @@
 Company questions places/sites
 ----------------------------------
 - https://workat.tech/problem-solving/practice/companies
+    - orace - https://workat.tech/company/oracle/interview-questions/problem-solving
 - binary search
 - leetcode discuss(filter by "company name" and "newest to oldest")
 - gfg interview experiences 
@@ -9,7 +10,7 @@ Company questions places/sites
     - company-wise : https://www.desiqna.in/company-wise-questions
     - oa's : https://www.desiqna.in/online-assessments
     - tcs nqt - https://www.desiqna.in/tag/tcs_nqt
-
+    - de-shaw - https://www.desiqna.in/tag/de-shaw_oa
 ----------------------------------
 DSA Lists
 ----------------------------------
