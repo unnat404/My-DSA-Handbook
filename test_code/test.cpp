@@ -1,90 +1,119 @@
-// most optimized : 
 #include <iostream>
 #include <bits/stdc++.h>
 using namespace std;
+#define nil -1
+#define MAX 100
 #define ll long long 
-#define ull unsigned long long int
 
-// build lps array
-vector<int> kmpProcess(string needle) {
-	int n = needle.size();
-	vector<int> lps(n, 0);
-	for (int i = 1, len = 0; i < n;) {
-		if (needle[i] == needle[len]) {
-			lps[i++] = ++len;
-		} else if (len) {
-			len = lps[len - 1];
-		} else {
-			lps[i++] = 0;
-		}
+struct ListNode{
+	ListNode* next;
+	int val;
+	ListNode(int x) : val(x),next(nullptr){}
+	// ListNode(int x,ListNode* next):val=x,next=next;
+};
+int findLengthofList(ListNode* node){
+	int n=0;
+	while(node!=nullptr){
+		node=node->next;
+		n++;
 	}
-	return lps;
+	return n;
 }
+int intersection2(ListNode* head1, ListNode* head2){
+	unordered_set<int> items;
+	ListNode* dummy=head1; 
+	int intersect = -1 ; 
+	while(dummy!=nullptr){
+		cout<<dummy->val;
+		items.insert(dummy->val);
+		dummy=dummy->next;
+	}
 
-// fuction to find matching substring exists or not (using KMP algo)
-int findNeedleInHaystack(string haystack, string needle) {
-	int m = haystack.size(), n = needle.size();
-	if (!n) {
-		return 0;
+	dummy=head2;
+	while(dummy!=nullptr){
+		if(items.find(dummy->val)!=items.end()){
+			intersect = dummy->val;
+			break;
+		}
+		dummy = dummy->next;
 	}
-	vector<int> lps = kmpProcess(needle);
-	for (int i = 0, j = 0; i < m;) {
-		if (haystack[i] == needle[j]) { 
-			i++, j++;
-		}
-		if (j == n) {
-			return i - j;
-		}
-		if (i < m && haystack[i] != needle[j]) {
-			j ? j = lps[j - 1] : i++;
-		}
-	}
-	return -1;
+	return intersect;
 }
-
 int main()
 {
-    #ifndef ONLINE_JUDGE
-    freopen("consecutive_cuts_chapter_1_validation_input.txt", "r", stdin);
-    freopen("output.txt", "w", stdout);
-	#endif
-
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
-    
-    ll i,t,n,k,x;
+    #ifndef ONLINE_JUDGE
+	freopen("input.txt", "r", stdin);
+	freopen("output.txt", "w", stdout);
+	#endif
+    ////vector<int> v(100, 0); //initialize 100 elements of vector to 0
+    int t,n,i,k,x,y,cur,sum,ans;
+    string res="";
+	ListNode* dummy;
+    ListNode* head1 = new ListNode(1);
 	
-    int found,cas;
-    string s,res="",ans,a,b,tem;
-	bool possible;
-
-    cas=0;
-	cin>>t;
-	while(t>0){
-	    t--;cas++;
-	    cin>>n>>k;
-		a=b="";
-		found=-1;
-		for(i=0;i<n;i++){
-			cin>>tem;
-			if(a=="") a+= tem;
-			else a+= " " +tem;			
-		}	
-		for(i=0;i<n;i++){
-			cin>>tem;
-			if(b=="") b=tem;
-			else b+= " " +tem;			
-
-		}
-
-		b += " " +b;
-		if(k>0) found = findNeedleInHaystack(b,a);
-
-		if(found == -1) ans = "NO";
-		else ans = "YES";
-	    res+="Case #"+to_string(cas)+": "+ans+"\n";
-	}
-// 	ans.erase(ans.length()-1);//removing new line charector from end
-	cout<<res;
+	dummy = new ListNode(2);
+	head1->next = dummy;
+	dummy = new ListNode(3);
+	head1->next->next = dummy;
+	dummy = new ListNode(4);
+	head1->next->next->next = dummy;
+	dummy = new ListNode(5);
+	head1->next->next->next->next = dummy;
+	dummy = new ListNode(6);
+	head1->next->next->next->next->next = dummy;
+	
+	ListNode* head2 = new ListNode(11);
+	
+	dummy = new ListNode(3);
+	head2->next = dummy;
+	dummy = new ListNode(13);
+	head2->next->next = dummy;
+	
+	ans = intersection2(head1,head2);
+	cout<< "\nIntersection val: ";
+	cout<<ans;	
+	
     return 0;
 }
+// ListNode* intersection(ListNode* head1, ListNode* head2){
+// 	int len1,len2,i,diff;
+// 	len1=len2=0;
+// 	ListNode* intersection;
+// 	len1=findLengthofList(head1);
+// 	len2=findLengthofList(head2);
+	
+// 	diff = len1-len2;
+
+// 	if(diff>0){
+// 		// list1 is bigger
+// 		diff = abs(diff);
+// 		while(diff--){
+// 			head1=head1->next;
+// 		}
+// 	}
+// 	else{
+// 		// list2 is bigger
+// 		diff = abs(diff);
+// 		while(diff--){
+// 			head1=head1->next;
+// 		}
+// 	}
+
+// 	// now start iterating
+// 	while(head1!=head2){
+// 		head1=head1->next;
+// 		head2=head2->next;
+// 	}
+
+
+// }
+/*
+
+1 2 3 4 5 6 7 
+
+11 7 13 
+
+4
+*/

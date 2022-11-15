@@ -264,7 +264,7 @@ public:
 
 // ------------- TO DO --------
 
-// my code :: incorrect hai niche wla  (error aa rha hai check it why)
+// my code :: INCORRECT hai niche wla  (error aa rha hai check it why)
 class Solution {
 public:
     //question came in facebook
@@ -356,7 +356,7 @@ public:
             if(s[1]=='!'){
                 ca = s[0]-'a', cb = s[3]-'a';
                 ra = findRoot(roots,ca) , rb = findRoot(roots,cb);
-                if(ca==cb) return false;
+                if(ca==cb) return false;// edge-case 
                 if(ca!=cb && ra==rb && ra!=-1) return false;
             }
         }

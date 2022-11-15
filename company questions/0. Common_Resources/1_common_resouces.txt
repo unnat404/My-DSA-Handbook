@@ -33,8 +33,8 @@ Leadership Principles
 DBMS/SQL
 ----------------------------------
 - hackerank 80 qns
--  
-- 
+- leetcode qns
+- codestudio 100 qns
 - 
 
 

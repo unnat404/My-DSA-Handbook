@@ -7,6 +7,12 @@ Helpful Links/Resouces:
 OA questions:
 - ***list in copy
 - 2021 inrern qns in copy
+- https://leetcode.com/discuss/interview-question/2350337/Morgan-Stanley-OA-oror-C%2B%2BAlgo-oror-24th-July-oror-Prefix-XOR-oror-Longest-Work-Slot
+- https://www.geeksforgeeks.org/morgan-stanley-interview-experience-for-summer-internship-2021/
+- **https://workat.tech/company/morgan-stanley/interview-questions/problem-solving
 
+
+- https://www.geeksforgeeks.org/morgan-stanley-interview-experience-for-summer-internship-2021-off-campus/
+- 
 
 */

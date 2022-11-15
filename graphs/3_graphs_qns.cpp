@@ -1,8 +1,10 @@
 /***************************************************************************************************
 Graphs Problem List(found during problem solving/contests):
 
-- Leetcode 2360. Longest Cycle in a Graph :: https://leetcode.com/problems/longest-cycle-in-a-graph/
-- Minm vertices to be removed(/deleted) so that all nodes become disconnected
+1) Leetcode 2360. Longest Cycle in a Graph :: https://leetcode.com/problems/longest-cycle-in-a-graph/
+2) Minm vertices to be removed(/deleted) so that all nodes become disconnected
+3) Leetcode 947. Most Stones Removed with Same Row or Column :: https://leetcode.com/problems/most-stones-removed-with-same-row-or-column/
+4)
 
 *****************************************************************************************************/
 
@@ -10,7 +12,9 @@ Graphs Problem List(found during problem solving/contests):
 #include <bits/stdc++.h>
 using namespace std;
 // =======================================================================================================================================
-// Leetcode 2360. Longest Cycle in a Graph :: https://leetcode.com/problems/longest-cycle-in-a-graph/
+/*
+1) Leetcode 2360. Longest Cycle in a Graph :: https://leetcode.com/problems/longest-cycle-in-a-graph/
+*/
 class Solution {
 public:
     int mark_dist(vector<int>& edges,vector<pair<int,int>>& dist, int node){
@@ -66,7 +70,7 @@ o/p: -1
 */
 // =======================================================================================================================================
 /* 
-Q) Minimum vertices to be removed(/deleted) so that all nodes become disconnected
+2) Minimum vertices to be removed(/deleted) so that all nodes become disconnected
 Given : N vertices in graph ;  M edges given in M lines by Ai and Bi (1-based indexing of nodes)
 ------------------- 
 sample i/p format:
@@ -220,7 +224,71 @@ implementation :
 */
 
 // =======================================================================================================================================
+/*
+3) Leetcode 947. Most Stones Removed with Same Row or Column :: https://leetcode.com/problems/most-stones-removed-with-same-row-or-column/
+*/
+//solution 1
+class Solution {
+public:
+    // visit all nodes in current component
+    void dfs(int node,vector<bool>& vis,unordered_map<int,vector<int>>& xs,unordered_map<int,vector<int>>& ys,vector<vector<int>>& stones){
+        vis[node]=true;
+        int x,y;
+        x=stones[node][0],y=stones[node][1];
 
+        //visit corresponding y's for that x
+        for(auto ind:xs[x]){
+            if(!vis[ind]){
+                dfs(ind,vis,xs,ys,stones);
+            }
+        }
+        //visit corresponding x's for that y 
+        for(auto ind:ys[y]){
+            if(!vis[ind]) dfs(ind,vis,xs,ys,stones);
+        }      
+
+    }
+    int removeStones(vector<vector<int>>& stones) {
+        int i,n=stones.size(),j,x,y,connected_components=0;
+        unordered_map<int,vector<int>> xs,ys;
+        vector<bool> vis(n,false);
+
+        // for each x & y store there node no.s for which they occur
+        for(i=0;i<n;i++){
+            x=stones[i][0],y=stones[i][1];
+            xs[x].push_back(i);
+            ys[y].push_back(i);
+        }
+
+        //count no of connected components
+        for(i=0;i<n;i++){
+            if(!vis[i]){
+                connected_components++;
+                dfs(i,vis,xs,ys,stones);
+            }
+        }
+
+        return n-connected_components;
+    }
+};
+
+//solution 2 (using union find)
+// ***TODO : excellent video : https://www.youtube.com/watch?v=beOCN7G4h-M&ab_channel=ShiranAfergan
+
+
+/*
+- do a dfs/bfs/union find
+
+solution 1
+- find no of connected components = x
+    ways to find # of connected components:
+    - dfs/bfs
+    - disjoint set union
+- ans = (no of nodes - x)
+
+you can think of it as: 
+- tree 
+*/
 
 // =======================================================================================================================================
 
