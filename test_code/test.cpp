@@ -5,39 +5,13 @@ using namespace std;
 #define MAX 100
 #define ll long long 
 
-struct ListNode{
-	ListNode* next;
-	int val;
-	ListNode(int x) : val(x),next(nullptr){}
-	// ListNode(int x,ListNode* next):val=x,next=next;
-};
-int findLengthofList(ListNode* node){
-	int n=0;
-	while(node!=nullptr){
-		node=node->next;
-		n++;
+void dfs(int color,int node,vector<vector<int>> &g,vector<int> &vis, vector<int> &cur){
+	vis[node]=color+1;
+	// cout<<node<<" ";
+	cur.push_back(node);
+	for(auto nbr:g[node]){
+		if(vis[nbr]==0) dfs(color,nbr,g,vis,cur);
 	}
-	return n;
-}
-int intersection2(ListNode* head1, ListNode* head2){
-	unordered_set<int> items;
-	ListNode* dummy=head1; 
-	int intersect = -1 ; 
-	while(dummy!=nullptr){
-		cout<<dummy->val;
-		items.insert(dummy->val);
-		dummy=dummy->next;
-	}
-
-	dummy=head2;
-	while(dummy!=nullptr){
-		if(items.find(dummy->val)!=items.end()){
-			intersect = dummy->val;
-			break;
-		}
-		dummy = dummy->next;
-	}
-	return intersect;
 }
 int main()
 {
@@ -47,33 +21,42 @@ int main()
 	freopen("input.txt", "r", stdin);
 	freopen("output.txt", "w", stdout);
 	#endif
-    ////vector<int> v(100, 0); //initialize 100 elements of vector to 0
-    int t,n,i,k,x,y,cur,sum,ans;
-    string res="";
-	ListNode* dummy;
-    ListNode* head1 = new ListNode(1);
-	
-	dummy = new ListNode(2);
-	head1->next = dummy;
-	dummy = new ListNode(3);
-	head1->next->next = dummy;
-	dummy = new ListNode(4);
-	head1->next->next->next = dummy;
-	dummy = new ListNode(5);
-	head1->next->next->next->next = dummy;
-	dummy = new ListNode(6);
-	head1->next->next->next->next->next = dummy;
-	
-	ListNode* head2 = new ListNode(11);
-	
-	dummy = new ListNode(3);
-	head2->next = dummy;
-	dummy = new ListNode(13);
-	head2->next->next = dummy;
-	
-	ans = intersection2(head1,head2);
-	cout<< "\nIntersection val: ";
-	cout<<ans;	
+
+	int i,n,t,ans,a,b,u,v,m,count,cur_indeg;
+	cin>>t;
+
+	while(t--){
+		cin>>n>>m;
+		ans=count=0;
+		vector<int> indeg(n,0),vis(n,0),cur;
+		vector<vector<int>> g(n);
+
+		for(i=0;i<m;i++){
+			cin>>u>>v;
+			u--,v--;
+			indeg[v]++;
+			g[u].push_back(v);
+			g[v].push_back(u);
+		}
+
+		for(i=0;i<n;i++){
+			cur.clear();
+			cur_indeg=0;
+			if(vis[i]==0){
+				dfs(i,i,g,vis,cur),count++;
+				for(auto x:cur){
+					if(indeg[x]==0) cur_indeg++;
+				}
+				ans+=cur_indeg+1;
+				// if(cur_indeg>0) ans--;
+				
+			} 
+		}
+
+		cout<<ans<<"\n";
+		// cout<<"\n------------\n";
+	}   
+
 	
     return 0;
 }
