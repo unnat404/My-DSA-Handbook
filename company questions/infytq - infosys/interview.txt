@@ -1,0 +1,34 @@
+Sheet Link: 
+-  https://docs.google.com/spreadsheets/d/1_Okg5tZ3eY0IbHVxN1zYUBCmiRHS2iMmU7_7XSKQKVo/edit?usp=sharing
+- 
+
+Infosys Interview Prep
+-  **https://discuss.codechef.com/t/preparation-for-se-ses-dse-pp-interview-hack-with-infy-and-infytq/70917
+-  https://medium.com/@chandanagrawal23/the-journey-from-dse-ses-to-sp-pp-in-infosys-20ad63c6ede4
+-  https://www.interviewbit.com/infosys-interview-questions/
+-  https://www.geeksforgeeks.org/infosys-dse-interview-experience-2021/
+-  https://www.geeksforgeeks.org/infosys-interview-experience-for-dse-2022/
+-  https://www.geeksforgeeks.org/infosys-interview-experience-for-dse-system-engineer-on-campus-2022/
+-  https://www.cselectricalandelectronics.com/infosys-hiring-process-for-power-programmer-digital-specialist-engineer/
+
+---------------------
+Specialist Programmer
+---------------------
+01. Stack using queue, queue using stack
+02. LinkedList reversal  ( Recursively)
+03. Remove k Digits
+04. Candies (hackerrank)
+05. Left/Right View of A Binary tree
+06. Next Palindrome
+07. Implement Merge Sort / Quick Sort / Heap Sort
+08. Dijkstra Algo / Flood Fill
+09. knapsack
+10. water trapping
+11. prime - sieve
+
+General Resources
+- https://www.geeksforgeeks.org/company-interview-corner/
+- GFG Last minute notes ::  cs funda topics 
+- interviewbit top 50 qns of all topics of cs funda
+
+
