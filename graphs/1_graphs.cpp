@@ -539,9 +539,15 @@ d d d r # # l #
 // Leetcode 207. Course Schedule :: https://leetcode.com/problems/course-schedule/
 // Company tags:: Uber 
 
-//soln: you have to keep 2 arrays(for directed graphs mein cyclicity check krne k liye)
-// -> one for current path ,&,
-// -> one for visited (only visited is need in case of undirected graphs) 
+/*
+soln: you have to keep 2 arrays(for directed graphs mein cyclicity check krne k liye)
+-> one for current path ,&,
+-> one for visited (only visited is need in case of undirected graphs) 
+
+Food for thought: Why do we need to keep track of curent path for a directed graph??
+Reason : think of Y shaped graph 
+- node at the intersection has appeared once in one path but that same node can be a part of another non-cyclic path so keeping visited vector is NOT enough
+*/
 class Solution {
 public:
     bool checkCycle(int node,vector<int>& visited,vector<bool> &cur_path,vector<vector<int>> &adj){
@@ -582,6 +588,7 @@ public:
 };
 
 /*
+// apparch 2 : (nice approach || topo-sort)
 //not my  approach : see this later (from leetcode discuss)
 
 //Just a simple topological sort, which can be finished in 15 lines. Beats 99%.
