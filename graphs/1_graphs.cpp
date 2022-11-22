@@ -536,12 +536,12 @@ d r # #
 d d d r # # l #
 */
 //===================================================================================================
-// Leetcode 207. Course Schedule :: https://leetcode.com/problems/course-schedule/
+// **Leetcode 207. Course Schedule :: https://leetcode.com/problems/course-schedule/
 // Company tags:: Uber 
 
 /*
 soln: you have to keep 2 arrays(for directed graphs mein cyclicity check krne k liye)
--> one for current path ,&,
+-> one for current path (imp: unmark cur_node in current_path while backtraking also ),&,
 -> one for visited (only visited is need in case of undirected graphs) 
 
 Food for thought: Why do we need to keep track of curent path for a directed graph??
@@ -633,7 +633,7 @@ true
 false
 true
 */
-// Qn boils down to findig cyclicity in a directed graph (check 2_graphs_algo.cpp for its algo)
+// Qn boils down to finding cyclicity in a directed graph (check 2_graphs_algo.cpp for its algo)
 
 //===================================================================================================
 // **Leetcode 210. Course Schedule II :: https://leetcode.com/problems/course-schedule-ii/
@@ -680,8 +680,8 @@ public:
 // Topological sort based question
 //===================================================================================================
 //  Leetcode 127. Word Ladder :: https://leetcode.com/problems/word-ladder/
-// tags :  google(v.old) , shortest path
-class Solution {
+// tags :  google(v.old) , shortest path (in undirected & unweighted graph) 
+class word_ladder {
 public:
     //1. model of graph : nodes as wordlist elements & beginWord  (undirected edges bw elements at distance 1)
     //2. find shortest distance between beginWord & endWord nodes : use level order traversal for it(bfs)
@@ -725,7 +725,7 @@ public:
 //===================================================================================================
 
 // Leetcode 542. 01 Matrix :: https://leetcode.com/problems/01-matrix/
-class Solution {
+class zero_one_matrix {
 public:
     int dx[4]={-1,1,0,0};
     int dy[4]={0,0,-1,1};
@@ -775,7 +775,7 @@ public:
 // Qn boils down to : maintain level(for shortest path) while doing multi-source bfs
 //===================================================================================================
 // Leetcode  1162. As Far from Land as Possible :: https://leetcode.com/problems/as-far-from-land-as-possible/
-class Solution {
+class as_far_from_land_as_possible {
 public:
     int dx[4]={-1,1,0,0};
     int dy[4]={0,0,-1,1};
@@ -828,7 +828,7 @@ public:
 #include <bits/stdc++.h>
 using namespace std; 
 
-class Solution{
+class alien_dictionary{
     public:
     string findOrder(string dictionary[], int n, int K) {
         // Construct the graph
@@ -916,12 +916,26 @@ So one of the ways we can think of is: it may be Topological Sort(since ordering
 Above code is Optimized using following logic:
 Here we capture only the relations between adjacent words only(as the relationship is transitive so those will be automatically captured in the graph itself, 
 So we don’t need to populate the relations between all the words(nC2 relations) rather just adjacent words(n-1 relations) would also work)
+Example:
+dict = ["abc","dca","xyzz"]
+
+Brute force (edges formed):
+a->d | a->x | d->x
+
+Optimized (edges formed using our above apporach):
+a->d | d->x
+
+NOTE: in brute force approach : 
+- edge a->x is an additional edge
+- unwanted as its relation/info is already captured by a->d->x (hence a->x)
+- transitive dependency is already captured by just comparing adjacent words of sorted list
+
 */
 
 //===================================================================================================
 // Leetcode 743. Network Delay Time :: https://leetcode.com/problems/network-delay-time/ (shortest path- wieghted)
 
-class Solution {
+class network_delay_time {
 public:
     int networkDelayTime(vector<vector<int>>& times, int n, int k) {
         // Level order traversal : bfs -> but since its weighted we maintain a *priority queue*
@@ -973,6 +987,10 @@ ans= 1
 3
 1
 ans=3
+
+Question boils down to finding shortest-maximum_sum-weighted path from one node
+
+NOTE: we are using priority queue to choose the minimum weight path out of all currently available paths
 */
 
 //===================================================================================================
