@@ -46,6 +46,9 @@ Graphs Problem List:
     ○ Leetcode 133. Clone Graph :: https://leetcode.com/problems/clone-graph/
     ○ Leetcode 1254. Number of Closed Islands
 
+-> Additional resources : 
+    - ** good sorted/bucketed pblms for revision : https://leetcode.com/discuss/interview-question/2886740/familiar-with-graphs-algorithm
+    - 
 --------------------
 Leetcode Premium Problem resources:
     - For exact leetcode questions + company tags :: https://leetcode.ca/all/problems.html
@@ -997,6 +1000,7 @@ NOTE: we are using priority queue to choose the minimum weight path out of all c
 // (premium)Leetcode 1102. Path With Maximum Minimum Value 
 // Practice Link:: https://www.codingninjas.com/codestudio/problems/path-with-maximum-and-minimum-value_1281861
 // https://leetcode.ca/all/1102.html
+// TODO : did not completely grasp the intuition/concept
 
 #include <iostream>
 #include<bits/stdc++.h>
@@ -1046,7 +1050,7 @@ A(i)(j)(k) = minimum metric(eg: path sum) to reach form node I to node j ;  with
 
 Things we need to consider: 
 	1. Order of iteration (/order of filling the table):
-		a. Form the recursive relation its clear we need to fill the minimum k first ,i.e, since A(ijk) is dependent on A(ij(k-1)) therefore we fill the table for k=0 first then for k=1,…. & so on
+		a. From the recursive relation its clear we need to fill the minimum k first ,i.e, since A(ijk) is dependent on A(ij(k-1)) therefore we fill the table for k=0 first then for k=1,…. & so on
 	2. Base Case
 		a. dp(ij) = -1 ; if no edge between nodes i & j
 		b. dp(ij) = Wij ; if there is a edge between node i & j and weight of the edge is Wij
