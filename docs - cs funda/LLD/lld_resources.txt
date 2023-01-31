@@ -1,0 +1,15 @@
+- https://gitlab.com/shrayansh8/interviewcodingpractise/-/tree/main/src/LowLevelDesign
+- Design patterns:
+    - Playlist : https://www.youtube.com/playlist?list=PLrhzvIcii6GNjpARdnO4ueTUAVR9eMBpc
+    - https://medium.com/swlh/design-pattern-explained-in-five-minutes-4eae439005d6
+    - https://github.com/DovAmir/awesome-design-patterns
+    - https://www.youtube.com/watch?v=tv-_1er1mWI&ab_channel=Fireship
+    - https://refactoring.guru/
+        - https://refactoring.guru/design-patterns
+        - https://refactoring.guru/refactoring
+    - 
+
+- python
+    - profiling 
+        - https://www.youtube.com/watch?v=m_a0fN48Alw&ab_channel=mCoding
+    - asyncio
